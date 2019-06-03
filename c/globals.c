@@ -6,9 +6,8 @@
 
 #include <stdio.h>
 
-#define FROOZLE_BUILDING 1
-
 #include "mpi.h"
+
 
 struct froozle_comm {
     int bogus;

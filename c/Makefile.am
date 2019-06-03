@@ -1,5 +1,7 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
+AM_CPPFLAGS = -DFROOZLE_BUILDING=1
+
 lib_LTLIBRARIES = libmpi.la
 
 libmpi_la_SOURCES = \
