@@ -56,6 +56,8 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_FC
 
+AC_FC_SRCEXT([f90])
+
 # Make sure we got all 3 compilers.  Because this is a demo project,
 # we'll just refuse to continue if we didn't get all 3.
 AS_IF([test -z "$CC" -o -z "$CXX" -o -z "$FC"],
@@ -85,10 +87,12 @@ FCFLAGS="$FCFLAGS_save $fc_mpifh"
 dnl ----------------------------------------------------------------
 
 FROOZLE_CHECK_CC_C11
+FROOZLE_FORTRAN_CHECK_IGNORE_TKR
 
 dnl ----------------------------------------------------------------
 
 AC_CONFIG_HEADER([c/mpi-config.h])
+AC_CONFIG_HEADER([fortran-usempi/fortran-config.h])
 
 AC_OUTPUT([
     Makefile
@@ -102,3 +106,4 @@ AC_OUTPUT([
 
     examples/Makefile
 ])
+dnl    fortran-usempi/mpi-module.f90
