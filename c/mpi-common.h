@@ -27,6 +27,10 @@ extern MPI_Comm MPI_COMM_WORLD;
 extern MPI_Datatype MPI_INT;
 extern MPI_Datatype MPI_CHAR;
 
+extern const int MPI_STATUS_SIZE;
+
+extern MPI_Status *MPI_STATUS_IGNORE;
+
 /***************************************************************/
 
 // These functions do not have count arguments, and are therefore

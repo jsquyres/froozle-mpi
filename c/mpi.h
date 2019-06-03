@@ -41,12 +41,12 @@ int MPI_Allgather(const void *sendbuf, int sendcount,
              MPI_Count: MPI_Send_count                      \
              )(buf, count, dt, rank, tag, comm)
 
-#define MPI_Recv(buf, count, dt, rank, tag, comm)           \
+#define MPI_Recv(buf, count, dt, rank, tag, comm, status)   \
     _Generic(count,                                         \
              default: MPI_Recv,                             \
              int: MPI_Recv,                                 \
              MPI_Count: MPI_Recv_count                      \
-             )(buf, count, dt, rank, tag, comm)
+             )(buf, count, dt, rank, tag, comm, status)
 
 #define MPI_Allgather(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm) \
     _Generic(sendcount,                                                 \

@@ -13,7 +13,7 @@ int MPI_Send(const void *buf, MPI_Count count,
              MPI_Datatype datatype,
              int dest, int tag, MPI_Comm comm)
 {
-    printf("This is C++ MPI_Send_count\n");
+    printf("This is C++ MPI_Send (with count params)\n");
 
     return MPI_SUCCESS;
 }

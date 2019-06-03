@@ -14,7 +14,7 @@ int MPI_Allgather(const void *sendbuf, int sendcount,
                   void *recvbuf, int recvcount,
                   MPI_Datatype recvtype, MPI_Comm comm)
 {
-    printf("This is C++ MPI_Allgather_count\n");
+    printf("This is C++ MPI_Allgather (with int params)\n");
 
     return MPI_SUCCESS;
 }
