@@ -1,0 +1,19 @@
+# Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
+
+lib_LTLIBRARIES = libmpi.la
+
+libmpi_la_SOURCES = \
+        mpi.h \
+        mpi-config.h \
+        mpi-common.h \
+        globals.c \
+        allgather_int.c \
+        allgather_count.c \
+        comm_rank.c \
+        comm_size.c \
+        finalize.c \
+        init.c \
+        recv_int.c \
+        recv_count.c \
+        send_int.c \
+        send_count.c
