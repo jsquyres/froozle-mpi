@@ -56,6 +56,10 @@ AC_PROG_CC
 AC_PROG_CXX
 AC_PROG_FC
 
+CFLAGS=$CFLAGS_save
+CXXFLAGS=$CXXFLAGS_save
+FCFLAGS=$FCFLAGS_save
+
 AC_FC_SRCEXT([f90])
 
 # Make sure we got all 3 compilers.  Because this is a demo project,
@@ -75,14 +79,8 @@ cd "$TOP_BUILDDIR"
 AC_SUBST(TOP_SRCDIR)
 AC_SUBST(TOP_BUILDDIR)
 
-config="-I$TOP_SRCDIR/config -I$TOP_BUILDDIR/config"
-c="-I$TOP_SRCDIR/c -I$TOP_BUILDDIR/c"
-cxx="-I$TOP_SRCDIR/c -I$TOP_SRCDIR/cxx -I$TOP_BUILDDIR/cxx"
-fc_mpifh="-I$TOP_SRCDIR/fortran-mpifh"
-
-CFLAGS="$CFLAGS_save $config $c"
-CXXFLAGS="$CXXFLAGS_save $config $c $cxx"
-FCFLAGS="$FCFLAGS_save $fc_mpifh"
+CPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/config"
+CXXPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/config"
 
 dnl ----------------------------------------------------------------
 

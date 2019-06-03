@@ -1,5 +1,15 @@
 # Copyright (c) 2019 Cisco Systems.  All rights reserved.
 
+AM_CPPFLAGS = -I$(TOP_SRCDIR)/c
+
+# For <mpi.hpp> (which is not generated, and therefore Automake did
+# not automatically -I that directory)
+AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
+
+# For 'mpif.h' (which is not generated, and therefore Automake did
+# not automatically -I that directory)
+AM_FCFLAGS = -I$(TOP_BUILDDIR)/fortran-mpifh -I$(TOP_SRCDIR)/fortran-mpifh
+
 bin_PROGRAMS = \
         example_c \
         example_cxx \

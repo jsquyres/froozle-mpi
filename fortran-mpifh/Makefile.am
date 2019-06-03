@@ -1,5 +1,7 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
+AM_CPPFLAGS = -I$(TOP_SRCDIR)/c
+
 lib_LTLIBRARIES = libmpi_mpifh.la
 
 libmpi_mpifh_la_SOURCES = \

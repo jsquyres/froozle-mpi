@@ -1,5 +1,7 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
+AM_FCFLAGS = -I$(TOP_BUILDDIR)/fortran-mpifh -I$(TOP_SRCDIR)/fortran-mpifh
+
 lib_LTLIBRARIES = libmpi_usempi.la
 
 libmpi_usempi_la_SOURCES = \
