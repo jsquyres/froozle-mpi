@@ -5,6 +5,7 @@ lib_LTLIBRARIES = libmpi_mpifh.la
 libmpi_mpifh_la_SOURCES = \
         mpif.h \
         mpif-constants.h \
+        mpif-handles.h \
         mpif-sentinels.h \
         allgather_int_mpifh.c \
         comm_rank_f.f90 \

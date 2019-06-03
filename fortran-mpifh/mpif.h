@@ -4,4 +4,5 @@
 !
 
   include 'mpif-constants.h'
+  include 'mpif-handles.h'
   include 'mpif-sentinels.h'
