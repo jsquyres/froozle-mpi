@@ -45,6 +45,13 @@ module).
 You must have a C, C++, and Fortran compiler available to compile
 Froozle.
 
+If you are compiling from a git clone (i.e., if you need to run
+`autogen.sh`, you will need the GNU Autotools installed:
+
+* Autoconf
+* Automake
+* Libtool
+
 # Limitations
 
 The `configure` script does not properly check if your Fortran
@@ -67,10 +74,10 @@ $ ./autogen.sh
 # above autogen.sh step proceed directly to the next steps.
 
 # Run the configure script:
-$ ./configure |& tee config.out
+$ ./configure
 
 # Build Froozle
-$ make -j 8 |& tee make.out
+$ make -j 8
 
 # Optionally install Froozle
 $ make install
