@@ -10,6 +10,7 @@ AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
 # not automatically -I that directory)
 mpif = -I$(TOP_BUILDDIR)/fortran-mpifh -I$(TOP_SRCDIR)/fortran-mpifh
 
+usempi = -I$(TOP_SRCDIR)/fortran-usempi
 usef08 = -I$(TOP_SRCDIR)/fortran-usempif08
 
 bin_PROGRAMS = \
@@ -29,7 +30,7 @@ example_mpifh_FCFLAGS = $(mpif)
 example_mpifh_LDADD   = $(TOP_BUILDDIR)/fortran-mpifh/libmpi_mpifh.la
 
 example_usempi_SOURCES = example_usempi.f90
-example_usempi_FCFLAGS = $(mpif)
+example_usempi_FCFLAGS = $(mpif) $(usempi)
 example_usempi_LDADD   = \
         $(TOP_BUILDDIR)/fortran-usempi/libmpi_usempi.la \
         $(TOP_BUILDDIR)/fortran-mpifh/libmpi_mpifh.la
