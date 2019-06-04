@@ -24,24 +24,24 @@ int *froozle_MPI_STATUS_IGNORE = NULL;
 static int bogus = 0;
 
 
-void froozle_fortran_globals_init(int *val)
+void froozle_mpifh_globals_init(int *val)
 {
     // Put an external side-effect in here so that it doesn't get
     // optimized out.
     *val = ++bogus;
 }
 
-void froozle_fortran_globals_init_(int *val)
+void froozle_mpifh_globals_init_(int *val)
 {
     *val = ++bogus;
 }
 
-void froozle_fortran_globals_init__(int *val)
+void froozle_mpifh_globals_init__(int *val)
 {
     *val = ++bogus;
 }
 
-void FROOZLE_FORTRAN_GLOBALS_INIT(int *val)
+void FROOZLE_MPIFH_GLOBALS_INIT(int *val)
 {
     *val = ++bogus;
 }

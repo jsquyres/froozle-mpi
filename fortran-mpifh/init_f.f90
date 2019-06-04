@@ -12,6 +12,6 @@ subroutine MPI_Init(ierror)
 
   ! Do some housekeeping (see comment in this procedure to see why it
   ! is necessary)
-  call froozle_fortran_globals_init(val)
+  call froozle_mpifh_globals_init(val)
 
 end subroutine MPI_Init
