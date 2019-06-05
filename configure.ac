@@ -44,7 +44,7 @@ AH_BOTTOM([
 #endif /* FROOZLE_CONFIG_H */
 ])
 
-AC_CONFIG_HEADER([config/froozle_config.h])
+AC_CONFIG_HEADER([include/froozle_config.h])
 
 dnl ----------------------------------------------------------------
 
@@ -79,8 +79,8 @@ cd "$TOP_BUILDDIR"
 AC_SUBST(TOP_SRCDIR)
 AC_SUBST(TOP_BUILDDIR)
 
-CPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/config"
-CXXPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/config"
+CPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/include"
+CXXPPFLAGS="$CPPFLAGS -I$TOP_SRCDIR/include"
 
 dnl ----------------------------------------------------------------
 
@@ -108,12 +108,12 @@ AC_DEFINE_UNQUOTED([FROOZLE_TEST_GIANT_COUNT_F],
 
 dnl ----------------------------------------------------------------
 
-AC_CONFIG_HEADER([c/mpi-config.h])
-AC_CONFIG_HEADER([config/froozle_config_fortran.h])
+AC_CONFIG_HEADER([include/mpi-config.h])
+AC_CONFIG_HEADER([include/froozle_config_fortran.h])
 
 AC_OUTPUT([
     Makefile
-    config/Makefile
+    include/Makefile
 
     c/Makefile
     fortran-mpifh/Makefile

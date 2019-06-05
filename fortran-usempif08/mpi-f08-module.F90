@@ -177,4 +177,14 @@ module mpi_f08
      end subroutine MPI_Recv_count_f08
   end interface  MPI_Recv
 
+  ! Back-end C function to do the work for MPI_Get_elements[_x]
+  interface froozle_get_elements_f
+     subroutine froozle_get_elements_f(datatype, small, big)
+       include 'mpif-constants.h'
+       integer, intent(in) :: datatype
+       integer, intent(out) :: small
+       integer(KIND=MPI_COUNT_KIND), intent(out) :: big
+     end subroutine froozle_get_elements_f
+  end interface froozle_get_elements_f
+
 end module mpi_f08

@@ -9,10 +9,15 @@ typedef struct {
 } froozle_usempif08_handle_t;
 
 froozle_usempif08_handle_t froozle_f08_mpi_comm_world = {0};
-froozle_usempif08_handle_t froozle_f08_mpi_character = {0};
-froozle_usempif08_handle_t froozle_f08_mpi_integer = {1};
 froozle_usempif08_handle_t froozle_f08_mpi_status_ignore = {1};
 
+// These values are hard-coded in:
+// - c/globals.c
+// - fortran-usempif08/globals-usempif08.c
+// - include/mpif-handlers.h
+// Do not change them in one place without changing them in all places!
+froozle_usempif08_handle_t froozle_f08_mpi_integer = {0};
+froozle_usempif08_handle_t froozle_f08_mpi_character = {1};
 
 // Need to put code here that is actually invoked from elsewhere so
 // that the linker does not ignore this compilation unit (i.e., so the

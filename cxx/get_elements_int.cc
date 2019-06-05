@@ -5,8 +5,10 @@
 #include "froozle_config.h"
 
 #include <stdio.h>
+#include <limits.h>
 
 #include "mpi.hpp"
+#include "c/globals.h"
 
 
 int MPI_Get_elements(const MPI_Status *status,
@@ -14,13 +16,16 @@ int MPI_Get_elements(const MPI_Status *status,
 {
     printf("This is C++ MPI_Get_elements (with int params)\n");
 
-    // If they asked for MPI_CHAR, return FROOZLE_TEST_SMALL_COUNT.
-    // If they asked for MPI_INT, return FROOZLE_TEST_GIANT_COUNT_C (or
-    // MPI_UNDEFINED, since we can't hold that value in an int -- per
-    // MPI-3.1 p114).
-    *count = MPI_UNDEFINED;
-    if (datatype == MPI_CHAR) {
-        *count = FROOZLE_TEST_SMALL_COUNT;
+    // The test programs are passing in bogus statuses (e.g.,
+    // MPI_STATUS_IGNORE), so generate a status here and set a value
+    // based on the queried datatype.
+    MPI_Status dummy_status;
+    froozle_set_status(&dummy_status, datatype);
+
+    if (dummy_status.count > INT_MAX) {
+        *count = MPI_UNDEFINED;
+    } else {
+        *count = dummy_status.count;
     }
 
     return MPI_SUCCESS;

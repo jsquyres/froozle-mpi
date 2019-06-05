@@ -6,19 +6,9 @@ AM_CPPFLAGS = -I$(TOP_SRCDIR)/c
 # not automatically -I that directory)
 AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
 
-# For 'mpif.h' (which is not generated, and therefore Automake did
-# not automatically -I that directory)
-mpif = \
-        -I$(TOP_BUILDDIR)/fortran-mpifh \
-        -I$(TOP_SRCDIR)/fortran-mpifh \
-        -I$(TOP_BUILDDIR)/fortran-usempi \
-        -I$(TOP_SRCDIR)/config
-
-usempi = -I$(TOP_SRCDIR)/fortran-usempi
-usef08 = \
-        -I$(TOP_SRCDIR)/fortran-usempif08 \
-        -I$(TOP_BUILDDIR)/fortran-usempif08 \
-        -I$(TOP_SRCDIR)/config
+mpif   = -I$(TOP_SRCDIR)/include
+usempi = -I$(TOP_BUILDDIR)/fortran-usempi
+usef08 = -I$(TOP_BUILDDIR)/fortran-usempif08
 
 bin_PROGRAMS = \
         example_c \

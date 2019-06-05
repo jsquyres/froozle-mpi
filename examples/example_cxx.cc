@@ -105,19 +105,21 @@ static void check_eq(MPI_Count a, MPI_Count b, int line)
 
 static void do_get_elements(void)
 {
-    printf(">> The following functions call MPI_Get_elements\n");
+    printf(">> The following functions call MPI_Get_elements (with int params)\n");
     int count_i;
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_i);
     CHECK_EQ(count_i, 42);
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_i);
     CHECK_EQ(count_i, MPI_UNDEFINED);
 
-    printf(">> The following functions call MPI_Get_elements_x\n");
+    printf(">> The following functions call MPI_Get_elements (with count params)\n");
     MPI_Count count_c;
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_c);
     CHECK_EQ(count_c, FROOZLE_TEST_GIANT_COUNT_C);
+
+    printf(">> The following functions call MPI_Get_elements_x\n");
     MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
     MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INT, &count_c);
