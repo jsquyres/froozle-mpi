@@ -11,11 +11,13 @@ AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
 mpif = \
         -I$(TOP_BUILDDIR)/fortran-mpifh \
         -I$(TOP_SRCDIR)/fortran-mpifh \
+        -I$(TOP_BUILDDIR)/fortran-usempi \
         -I$(TOP_SRCDIR)/config
 
 usempi = -I$(TOP_SRCDIR)/fortran-usempi
 usef08 = \
         -I$(TOP_SRCDIR)/fortran-usempif08 \
+        -I$(TOP_BUILDDIR)/fortran-usempif08 \
         -I$(TOP_SRCDIR)/config
 
 bin_PROGRAMS = \
@@ -28,7 +30,9 @@ bin_PROGRAMS = \
 example_c_LDADD = $(TOP_BUILDDIR)/c/libmpi.la
 
 example_cxx_SOURCES = example_cxx.cc
-example_cxx_LDADD   = $(TOP_BUILDDIR)/cxx/libmpi_cxx.la
+example_cxx_LDADD   = \
+        $(TOP_BUILDDIR)/cxx/libmpi_cxx.la \
+        $(TOP_BUILDDIR)/c/libmpi.la
 
 example_mpifh_SOURCES = example_mpifh.F90
 example_mpifh_FCFLAGS = $(mpif)

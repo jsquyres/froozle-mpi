@@ -1,0 +1,37 @@
+dist: xenial
+language: c
+
+compiler:
+    - gcc
+    - clang
+
+os:
+    - linux
+    - osx
+
+addons:
+    apt:
+        packages:
+            - gfortran
+            - g++
+
+
+# Brew update GNU Autotools so that autogen can succeed, and install
+# gcc (which installs gcc + g++ + gfortran)
+before_install:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update;
+        brew install gcc || true ; brew upgrade automake || true; brew upgrade libtool || true;
+      fi
+
+install:
+    - ./autogen.sh
+    - ./configure
+    - make -j4
+    - make distcheck
+
+script:
+    - ./examples/example_c
+    - ./examples/example_cxx
+    - ./examples/example_mpifh
+    - ./examples/example_usempi
+    - ./examples/example_usempif08
