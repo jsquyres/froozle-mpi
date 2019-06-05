@@ -15,7 +15,9 @@ program example_mpifh
   parameter(BUFLEN=32)
 
   character, dimension(BUFLEN) :: buffer
-  integer :: rank, size, count, ierr
+  integer :: rank, size, ierr
+  integer :: small_count
+  integer(KIND=MPI_COUNT_KIND) :: big_count
 
   call MPI_Init(ierr)
 
@@ -39,9 +41,24 @@ program example_mpifh
        buffer, SIZE, MPI_CHARACTER, &
        MPI_COMM_WORLD, ierr)
 
-  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, count, ierr)
-  if (count .ne. FROOZLE_TEST_SMALL_COUNT) then
-     write(*,*) "ERROR: ", count, "!=", FROOZLE_TEST_SMALL_COUNT
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, small_count, ierr)
+  if (small_count .ne. FROOZLE_TEST_SMALL_COUNT) then
+     write(*,*) "ERROR: ", small_count, "!=", FROOZLE_TEST_SMALL_COUNT
+     stop 1
+  endif
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, small_count, ierr)
+  if (small_count .ne. MPI_UNDEFINED) then
+     write(*,*) "ERROR: ", small_count, "!=", MPI_UNDEFINED
+     stop 1
+  endif
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHARACTER, big_count, ierr)
+  if (big_count .ne. FROOZLE_TEST_SMALL_COUNT) then
+     write(*,*) "ERROR: ", big_count, "!=", FROOZLE_TEST_SMALL_COUNT
+     stop 1
+  endif
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INTEGER, big_count, ierr)
+  if (big_count .ne. FROOZLE_TEST_GIANT_COUNT_F) then
+     write(*,*) "ERROR: ", big_count, "!=", FROOZLE_TEST_GIANT_COUNT_F
      stop 1
   endif
 

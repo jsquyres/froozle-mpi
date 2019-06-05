@@ -1,11 +1,12 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
-AM_CXXFLAGS = -I$(TOP_SRCDIR)/c
+AM_CXXFLAGS = \
+        -I$(TOP_SRCDIR)/include \
+        -I$(TOP_SRCDIR)
 
 lib_LTLIBRARIES = libmpi_cxx.la
 
 libmpi_cxx_la_SOURCES = \
-        mpi.hpp \
         allgather_int.cc \
         allgather_count.cc \
         get_elements_int.cc \

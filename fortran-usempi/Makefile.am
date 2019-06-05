@@ -1,9 +1,6 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
-AM_FCFLAGS = \
-        -I$(TOP_BUILDDIR)/fortran-mpifh \
-        -I$(TOP_SRCDIR)/fortran-mpifh \
-        -I$(TOP_SRCDIR)/config
+AM_FCFLAGS = -I$(TOP_SRCDIR)/include
 
 lib_LTLIBRARIES = libmpi_usempi.la
 

@@ -14,14 +14,11 @@ subroutine MPI_Get_elements_count_f08(status, datatype, count, ierr)
   integer(kind=MPI_COUNT_KIND), intent(out) :: count
   integer, optional, intent(out) :: ierr
 
+  integer :: dummy
+
   write(*,*) 'This is mpi_f08 module MPI_Get_elements_count_f08'
 
-  ! If they asked for MPI_CHAR, return FROOZLE_TEST_SMALL_COUNT.
-  ! If they asked for MPI_INT, return FROOZLE_TEST_GIANT_COUNT.
-  count = MPI_UNDEFINED
-  if (datatype%MPI_VAL .eq. MPI_CHARACTER%MPI_VAL) then
-     count = FROOZLE_TEST_SMALL_COUNT
-  else if (datatype%MPI_VAL .eq. MPI_INTEGER%MPI_VAL) then
-     count = FROOZLE_TEST_GIANT_COUNT_F
-  endif
+  ! Do the back-end work in C -- the strong type safety in Fortran is
+  ! too restrictive.
+  call froozle_get_elements_f(datatype, dummy, count)
 end subroutine MPI_Get_elements_count_f08

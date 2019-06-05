@@ -14,8 +14,6 @@ struct froozle_status;
 typedef struct froozle_comm *MPI_Comm;
 typedef struct froozle_datatype *MPI_Datatype;
 
-typedef struct froozle_status MPI_Status;
-
 typedef long MPI_Count;
 
 enum {
@@ -29,7 +27,15 @@ extern MPI_Comm MPI_COMM_WORLD;
 extern MPI_Datatype MPI_INT;
 extern MPI_Datatype MPI_CHAR;
 
-extern const int MPI_STATUS_SIZE;
+typedef struct froozle_status {
+    // Public fields
+    int MPI_SOURCE;
+    int MPI_TAG;
+    int MPI_ERROR;
+
+    // Private fields
+    MPI_Count count;
+} MPI_Status;
 
 extern MPI_Status *MPI_STATUS_IGNORE;
 
