@@ -11,11 +11,13 @@ AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
 mpif = \
         -I$(TOP_BUILDDIR)/fortran-mpifh \
         -I$(TOP_SRCDIR)/fortran-mpifh \
+        -I$(TOP_BUILDDIR)/fortran-usempi \
         -I$(TOP_SRCDIR)/config
 
 usempi = -I$(TOP_SRCDIR)/fortran-usempi
 usef08 = \
         -I$(TOP_SRCDIR)/fortran-usempif08 \
+        -I$(TOP_BUILDDIR)/fortran-usempif08 \
         -I$(TOP_SRCDIR)/config
 
 bin_PROGRAMS = \
