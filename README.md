@@ -18,6 +18,7 @@ flavor of how things will look with ticket #137:
 * MPI_INIT, MPI_FINALIZE, MPI_COMM_RANK, MPI_COMM_SIZE
 * MPI_SEND, MPI_RECV
 * MPI_ALLGATHER
+* MPI_GET_ELEMENTS, MPI_GET_ELEMENTS_X
 
 ## API languages / bindings
 
@@ -83,6 +84,9 @@ $ make -j 8
 $ make install
 ```
 
-A few example applications are in the examples/ directory.
+# Examples
+
+After building, you should examine and run the examples in the
+`examples` directory.
 
 Comments are welcome.

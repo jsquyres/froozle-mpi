@@ -1,3 +1,12 @@
+! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
+!
+! This is likely not a valid MPI application.  Its only purpose is to
+! compile and link properly; it will almost certainly not run
+! correctly with a valid / complete MPI implementation.
+!
+
+#include "froozle_config_fortran.h"
+
 program example_mpifh
   implicit none
   include 'mpif.h'
@@ -6,7 +15,7 @@ program example_mpifh
   parameter(BUFLEN=32)
 
   character, dimension(BUFLEN) :: buffer
-  integer :: rank, size, ierr
+  integer :: rank, size, count, ierr
 
   call MPI_Init(ierr)
 
@@ -29,6 +38,12 @@ program example_mpifh
   call MPI_Allgather(buffer, SIZE, MPI_CHARACTER, &
        buffer, SIZE, MPI_CHARACTER, &
        MPI_COMM_WORLD, ierr)
+
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, count, ierr)
+  if (count .ne. FROOZLE_TEST_SMALL_COUNT) then
+     write(*,*) "ERROR: ", count, "!=", FROOZLE_TEST_SMALL_COUNT
+     stop 1
+  endif
 
   call MPI_Finalize(ierr)
 

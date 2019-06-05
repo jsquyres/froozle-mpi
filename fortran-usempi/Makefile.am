@@ -1,6 +1,9 @@
 # Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 
-AM_FCFLAGS = -I$(TOP_BUILDDIR)/fortran-mpifh -I$(TOP_SRCDIR)/fortran-mpifh
+AM_FCFLAGS = \
+        -I$(TOP_BUILDDIR)/fortran-mpifh \
+        -I$(TOP_SRCDIR)/fortran-mpifh \
+        -I$(TOP_SRCDIR)/config
 
 lib_LTLIBRARIES = libmpi_usempi.la
 
@@ -8,6 +11,9 @@ libmpi_usempi_la_SOURCES = \
         mpi-module.F90 \
         allgather_int_usempi.F90 \
         allgather_count_usempi.F90 \
+        get_elements_int_usempi.F90 \
+        get_elements_count_usempi.F90 \
+        get_elements_x_usempi.F90 \
         recv_int_usempi.F90 \
         recv_count_usempi.F90 \
         send_int_usempi.F90 \

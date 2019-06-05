@@ -8,6 +8,9 @@ libmpi_cxx_la_SOURCES = \
         mpi.hpp \
         allgather_int.cc \
         allgather_count.cc \
+        get_elements_int.cc \
+        get_elements_count.cc \
+        get_elements_x.cc \
         recv_int.cc \
         recv_count.cc \
         send_int.cc \

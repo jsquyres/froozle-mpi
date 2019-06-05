@@ -14,6 +14,9 @@ libmpi_usempif08_la_SOURCES = \
         allgather_count_usempif08.F90 \
         comm_rank_usempif08.f90 \
         comm_size_usempif08.f90 \
+        get_elements_int_usempif08.F90 \
+        get_elements_count_usempif08.F90 \
+        get_elements_x_usempif08.F90 \
         init_usempif08.f90 \
         finalize_usempif08.f90 \
         recv_int_usempif08.F90 \
@@ -30,6 +33,9 @@ allgather_int_usempif08.lo: mpi_f08_types.mod
 allgather_count_usempif08.lo: mpi_f08_types.mod
 comm_rank_usempif08.lo: mpi_f08_types.mod
 comm_size_usempif08.lo: mpi_f08_types.mod
+get_elements_int_usempif08.lo: mpi_f08_types.mod
+get_elements_count_usempif08.lo: mpi_f08_types.mod
+get_elements_x_usempif08.lo: mpi_f08_types.mod
 init_usempif08.lo: mpi_f08_types.mod
 finalize_usempif08.lo: mpi_f08_types.mod
 recv_int_usempif08.lo: mpi_f08_types.mod

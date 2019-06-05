@@ -14,6 +14,8 @@ libmpi_la_SOURCES = \
         comm_rank.c \
         comm_size.c \
         finalize.c \
+        get_elements_int.c \
+        get_elements_count.c \
         init.c \
         recv_int.c \
         recv_count.c \

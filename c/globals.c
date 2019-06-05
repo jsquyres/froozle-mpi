@@ -37,3 +37,5 @@ MPI_Datatype MPI_INT = &froozle_int;
 MPI_Datatype MPI_CHAR = &froozle_char;
 
 MPI_Status *MPI_STATUS_IGNORE = &froozle_status_ignore;
+
+const int MPI_UNDEFINED = -1;

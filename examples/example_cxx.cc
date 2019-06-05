@@ -6,7 +6,10 @@
  * correctly with a valid / complete MPI implementation.
  */
 
+#include "froozle_config.h"
+
 #include <stdio.h>
+#include <stdlib.h>
 
 #include <mpi.hpp>
 
@@ -89,6 +92,38 @@ static void do_allgathers(void)
                   buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
 }
 
+static void check_eq(MPI_Count a, MPI_Count b, int line)
+{
+    if (a != b) {
+        printf("ERROR: %ld != %ld at line %d\n",
+               (long) a, (long) b, line);
+        exit(1);
+    }
+}
+
+#define CHECK_EQ(a, b) check_eq((a), (b), __LINE__)
+
+static void do_get_elements(void)
+{
+    printf(">> The following functions call MPI_Get_elements\n");
+    int count_i;
+    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_i);
+    CHECK_EQ(count_i, 42);
+    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_i);
+    CHECK_EQ(count_i, MPI_UNDEFINED);
+
+    printf(">> The following functions call MPI_Get_elements_x\n");
+    MPI_Count count_c;
+    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
+    CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
+    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_c);
+    CHECK_EQ(count_c, FROOZLE_TEST_GIANT_COUNT_C);
+    MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
+    CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
+    MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INT, &count_c);
+    CHECK_EQ(count_c, FROOZLE_TEST_GIANT_COUNT_C);
+}
+
 int main(int argc, char **argv)
 {
     MPI_Init(NULL, NULL);
@@ -100,6 +135,7 @@ int main(int argc, char **argv)
     do_sends();
     do_recvs();
     do_allgathers();
+    do_get_elements();
 
     MPI_Finalize();
 

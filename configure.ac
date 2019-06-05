@@ -89,8 +89,27 @@ FROOZLE_FORTRAN_CHECK_IGNORE_TKR
 
 dnl ----------------------------------------------------------------
 
+# These are testing values that we want to be consistent between C and
+# Fortran
+
+FROOZLE_TEST_SMALL_COUNT=42
+FROOZLE_TEST_GIANT_COUNT_C="(((long) 1000000000) * 42)"
+FROOZLE_TEST_GIANT_COUNT_F="(1000000000_8 * 42_8)"
+
+AC_DEFINE_UNQUOTED([FROOZLE_TEST_SMALL_COUNT],
+	[$FROOZLE_TEST_SMALL_COUNT],
+	[Small count testing value])
+AC_DEFINE_UNQUOTED([FROOZLE_TEST_GIANT_COUNT_C],
+	[$FROOZLE_TEST_GIANT_COUNT_C],
+	[Giant count testing value for C])
+AC_DEFINE_UNQUOTED([FROOZLE_TEST_GIANT_COUNT_F],
+	[$FROOZLE_TEST_GIANT_COUNT_F],
+	[Giant count testing value for Fortran])
+
+dnl ----------------------------------------------------------------
+
 AC_CONFIG_HEADER([c/mpi-config.h])
-AC_CONFIG_HEADER([fortran-usempi/fortran-config.h])
+AC_CONFIG_HEADER([config/froozle_config_fortran.h])
 
 AC_OUTPUT([
     Makefile
@@ -104,4 +123,3 @@ AC_OUTPUT([
 
     examples/Makefile
 ])
-dnl    fortran-usempi/mpi-module.f90

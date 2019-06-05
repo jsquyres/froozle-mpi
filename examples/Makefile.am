@@ -8,10 +8,15 @@ AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
 
 # For 'mpif.h' (which is not generated, and therefore Automake did
 # not automatically -I that directory)
-mpif = -I$(TOP_BUILDDIR)/fortran-mpifh -I$(TOP_SRCDIR)/fortran-mpifh
+mpif = \
+        -I$(TOP_BUILDDIR)/fortran-mpifh \
+        -I$(TOP_SRCDIR)/fortran-mpifh \
+        -I$(TOP_SRCDIR)/config
 
 usempi = -I$(TOP_SRCDIR)/fortran-usempi
-usef08 = -I$(TOP_SRCDIR)/fortran-usempif08
+usef08 = \
+        -I$(TOP_SRCDIR)/fortran-usempif08 \
+        -I$(TOP_SRCDIR)/config
 
 bin_PROGRAMS = \
         example_c \
@@ -29,13 +34,13 @@ example_mpifh_SOURCES = example_mpifh.F90
 example_mpifh_FCFLAGS = $(mpif)
 example_mpifh_LDADD   = $(TOP_BUILDDIR)/fortran-mpifh/libmpi_mpifh.la
 
-example_usempi_SOURCES = example_usempi.f90
+example_usempi_SOURCES = example_usempi.F90
 example_usempi_FCFLAGS = $(mpif) $(usempi)
 example_usempi_LDADD   = \
         $(TOP_BUILDDIR)/fortran-usempi/libmpi_usempi.la \
         $(TOP_BUILDDIR)/fortran-mpifh/libmpi_mpifh.la
 
-example_usempif08_SOURCES = example_usempif08.f90
+example_usempif08_SOURCES = example_usempif08.F90
 example_usempif08_FCFLAGS = $(usef08)
 example_usempif08_LDADD   = \
         $(TOP_BUILDDIR)/fortran-usempif08/libmpi_usempif08.la \

@@ -31,6 +31,15 @@ int MPI_Allgather(const void *sendbuf, int sendcount,
                   MPI_Datatype sendtype,
                   void *recvbuf, int recvcount,
                   MPI_Datatype recvtype, MPI_Comm comm);
+int MPI_Get_elements(const MPI_Status *status,
+                     MPI_Datatype datatype, int *count);
+
+// This is an MPI_Count-enabled function, but it is in MPI-3.0.  So it
+// is *always* defined.
+int MPI_Get_elements_x(const MPI_Status *status,
+                       MPI_Datatype datatype,
+                       MPI_Count *count);
+
 
 #if FROOZLE_HAVE_C11_GENERIC && !FROOZLE_BUILDING
 
@@ -54,6 +63,13 @@ int MPI_Allgather(const void *sendbuf, int sendcount,
              int: MPI_Allgather,                                        \
              MPI_Count: MPI_Allgather_count                             \
              )(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm)
+
+#define MPI_Get_elements(status, datatype, count)         \
+    _Generic(count,                                       \
+             default: MPI_Get_elements,                   \
+             int *: MPI_Get_elements,                     \
+             MPI_Count *: MPI_Get_elements_x              \
+             )(status, datatype, count)
 
 int MPI_Send_count(const void *buf, MPI_Count count,
                    MPI_Datatype datatype,

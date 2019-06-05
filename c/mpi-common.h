@@ -22,6 +22,8 @@ enum {
     MPI_SUCCESS
 };
 
+extern const int MPI_UNDEFINED;
+
 extern MPI_Comm MPI_COMM_WORLD;
 
 extern MPI_Datatype MPI_INT;

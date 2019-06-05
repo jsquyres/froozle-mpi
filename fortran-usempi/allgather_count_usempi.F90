@@ -3,7 +3,7 @@
 ! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 !
 
-#include "fortran-config.h"
+#include "froozle_config_fortran.h"
 
 subroutine MPI_Allgather_count(sendbuf, sendcount, sendtype, recvbuf, recvcount, &
      recvtype, comm, ierror)

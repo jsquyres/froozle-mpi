@@ -11,3 +11,6 @@
 
   integer MPI_STATUS_SIZE
   parameter(MPI_STATUS_SIZE = 32)
+
+  integer MPI_UNDEFINED
+  parameter(MPI_UNDEFINED = -1)

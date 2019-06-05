@@ -3,7 +3,7 @@
 ! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 !
 
-#include "fortran-config.h"
+#include "froozle_config_fortran.h"
 
 module mpi_f08
   use mpi_f08_types
@@ -41,6 +41,37 @@ module mpi_f08
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
      end subroutine MPI_Comm_size_f08
   end interface  MPI_Comm_size
+
+  interface MPI_Get_elements
+     subroutine MPI_Get_elements_f08(status, datatype, count, ierr)
+       use :: mpi_f08_types
+       implicit none
+       type(MPI_Status), intent(in) :: status
+       type(MPI_Datatype), intent(in) :: datatype
+       integer, intent(out) :: count
+       integer, optional, intent(out) :: ierr
+     end subroutine MPI_Get_elements_f08
+
+     subroutine MPI_Get_elements_count_f08(status, datatype, count, ierr)
+       use :: mpi_f08_types
+       implicit none
+       type(MPI_Status), intent(in) :: status
+       type(MPI_Datatype), intent(in) :: datatype
+       integer(kind=MPI_COUNT_KIND), intent(out) :: count
+       integer, optional, intent(out) :: ierr
+     end subroutine MPI_Get_elements_count_f08
+  end interface MPI_Get_elements
+
+  interface MPI_Get_elements_x
+     subroutine MPI_Get_elements_x_f08(status, datatype, count, ierr)
+       use :: mpi_f08_types
+       implicit none
+       type(MPI_Status), intent(in) :: status
+       type(MPI_Datatype), intent(in) :: datatype
+       integer(kind=MPI_COUNT_KIND), intent(out) :: count
+       integer, optional, intent(out) :: ierr
+     end subroutine MPI_Get_elements_x_f08
+  end interface MPI_Get_elements_x
 
   interface  MPI_Allgather
      subroutine MPI_Allgather_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, &

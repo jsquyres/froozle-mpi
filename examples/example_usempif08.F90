@@ -5,6 +5,8 @@
 ! correctly with a valid / complete MPI implementation.
 !
 
+#include "froozle_config_fortran.h"
+
 subroutine do_sends()
   use mpi_f08
   implicit none
@@ -74,7 +76,57 @@ end subroutine do_allgathers
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-program example_mpifh
+subroutine check_eq_i(a, b)
+  implicit none
+
+  integer :: a, b
+
+  if (a .ne. b) then
+     write(*,*) 'ERROR (integer): ', a, '!=', 'b'
+     stop 1
+  endif
+end subroutine check_eq_i
+
+subroutine check_eq_c(a, b)
+  use mpi_f08
+  implicit none
+
+  integer(kind=MPI_COUNT_KIND) :: a, b
+
+  if (a .ne. b) then
+     write(*,*) 'ERROR (MPI_COUNT_KIND): ', a, '!=', 'b'
+     stop 2
+  endif
+end subroutine check_eq_c
+
+subroutine do_get_elements()
+  use mpi_f08
+
+  integer :: i, ierr
+  integer(KIND=MPI_COUNT_KIND) :: c
+
+  write(*,*) ">> The following functions call MPI_Get_elements"
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, i, ierr)
+  call check_eq_i(i, FROOZLE_TEST_SMALL_COUNT)
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, i, ierr)
+  call check_eq_i(i, MPI_UNDEFINED)
+
+  write(*,*) ">> The following functions call MPI_Get_elements_count"
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, c, ierr)
+  call check_eq_c(c, INT(FROOZLE_TEST_SMALL_COUNT, KIND=MPI_COUNT_KIND))
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, c, ierr)
+  call check_eq_c(c, FROOZLE_TEST_GIANT_COUNT_F)
+
+  write(*,*) ">> The following functions call MPI_Get_elements_x"
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHARACTER, c, ierr)
+  call check_eq_c(c, INT(FROOZLE_TEST_SMALL_COUNT, KIND=MPI_COUNT_KIND))
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INTEGER, c, ierr)
+  call check_eq_c(c, FROOZLE_TEST_GIANT_COUNT_F)
+end subroutine do_get_elements
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+program example_usempif08
   use mpi_f08
   implicit none
 
@@ -88,6 +140,7 @@ program example_mpifh
   call do_sends()
   call do_recvs()
   call do_allgathers()
+  call do_get_elements()
 
   call MPI_Finalize(ierr)
-end program example_mpifh
+end program example_usempif08

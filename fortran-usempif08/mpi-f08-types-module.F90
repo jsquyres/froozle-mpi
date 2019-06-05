@@ -3,7 +3,7 @@
 ! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 !
 
-#include "fortran-config.h"
+#include "froozle_config_fortran.h"
 
 module mpi_f08_types
   use, intrinsic :: ISO_C_BINDING

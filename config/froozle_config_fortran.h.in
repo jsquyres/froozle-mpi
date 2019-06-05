@@ -1,0 +1,14 @@
+! -*- f90 -*-
+!
+! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
+!
+
+! These values come in from configure
+
+#undef FROOZLE_FORTRAN_IGNORE_TKR_PREDECL
+
+#undef FROOZLE_FORTRAN_IGNORE_TKR_TYPE
+
+#undef FROOZLE_TEST_SMALL_COUNT
+
+#undef FROOZLE_TEST_GIANT_COUNT_F

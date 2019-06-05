@@ -3,7 +3,7 @@
 ! Copyright (c) 2019 Cisco Systems, Inc.  All rights reserved.
 !
 
-#include "fortran-config.h"
+#include "froozle_config_fortran.h"
 
 module mpi
   ! Pull in the mpif.h declarations (e.g., constants, sentinels)
@@ -70,6 +70,33 @@ module mpi
        integer, intent(out) :: ierror
      end subroutine MPI_Allgather_count
   end interface MPI_Allgather
+
+  interface MPI_Get_elements
+     subroutine MPI_Get_elements(status, datatype, count, ierr)
+       include 'mpif-constants.h'
+       integer, dimension(MPI_STATUS_SIZE), intent(in) :: status
+       integer, intent(in) :: datatype
+       integer, intent(out) :: count, ierr
+     end subroutine MPI_Get_elements
+
+     subroutine MPI_Get_elements_count(status, datatype, count, ierr)
+       include 'mpif-constants.h'
+       integer, dimension(MPI_STATUS_SIZE), intent(in) :: status
+       integer, intent(in) :: datatype
+       integer(kind=MPI_COUNT_KIND), intent(out) :: count
+       integer, intent(out) :: ierr
+     end subroutine MPI_Get_elements_count
+  end interface MPI_Get_elements
+
+  interface MPI_Get_elements_x
+     subroutine MPI_Get_elements_x(status, datatype, count, ierr)
+       include 'mpif-constants.h'
+       integer, dimension(MPI_STATUS_SIZE), intent(in) :: status
+       integer, intent(in) :: datatype
+       integer(kind=MPI_COUNT_KIND), intent(out) :: count
+       integer, intent(out) :: ierr
+     end subroutine MPI_Get_elements_x
+  end interface MPI_Get_elements_x
 
   interface MPI_Send
      subroutine MPI_Send(buf, count, datatype, dest, tag, &

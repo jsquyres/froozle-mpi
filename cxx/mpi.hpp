@@ -27,6 +27,15 @@ int MPI_Allgather(const void *sendbuf, MPI_Count sendcount,
                   MPI_Datatype sendtype,
                   void *recvbuf, MPI_Count recvcount,
                   MPI_Datatype recvtype, MPI_Comm comm);
+int MPI_Get_elements(const MPI_Status *status,
+                     MPI_Datatype datatype,
+                     MPI_Count *count);
+
+// Note that we *also* have to define MPI_Get_elements_x(), because
+// that's defined in MPI-3.0.
+int MPI_Get_elements_x(const MPI_Status *status,
+                       MPI_Datatype datatype,
+                       MPI_Count *count);
 
 // int variants
 
@@ -41,5 +50,7 @@ int MPI_Allgather(const void *sendbuf, int sendcount,
                   MPI_Datatype sendtype,
                   void *recvbuf, int recvcount,
                   MPI_Datatype recvtype, MPI_Comm comm);
+int MPI_Get_elements(const MPI_Status *status,
+                     MPI_Datatype datatype, int *count);
 
 #endif // MPI_HPP
