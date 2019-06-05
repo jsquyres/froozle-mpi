@@ -33,6 +33,7 @@ static void do_sends(void)
     short smallI = 16;
     MPI_Send(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 
+#if FROOZLE_HAVE_C11_GENERIC
     printf(">> The following functions should call MPI_Send_count\n");
     MPI_Count bigI = 8589934592;
     MPI_Send(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
@@ -41,6 +42,7 @@ static void do_sends(void)
     // have no C11 _Generic support.
     MPI_Send(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     MPI_Send(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+#endif
 }
 
 static void do_recvs(void)
@@ -55,17 +57,17 @@ static void do_recvs(void)
     MPI_Recv(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
+#if FROOZLE_HAVE_C11_GENERIC
     printf(">> The following functions should call MPI_Recv_count\n");
     MPI_Count bigI = 8589934592;
     MPI_Recv(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
-    // This one will generate a compiler warning (or error!) if you
-    // have no C11 _Generic support.
     MPI_Recv(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
     MPI_Recv(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
+#endif
 }
 
 static void do_allgathers(void)
@@ -82,6 +84,7 @@ static void do_allgathers(void)
     MPI_Allgather(buffer, smallI, MPI_CHAR,
                   buffer, smallI, MPI_CHAR, MPI_COMM_WORLD);
 
+#if FROOZLE_HAVE_C11_GENERIC
     printf(">> The following functions should call MPI_Allgather_count\n");
     MPI_Count bigI = 8589934592;
     MPI_Allgather(buffer, bigI, MPI_CHAR,
@@ -90,6 +93,7 @@ static void do_allgathers(void)
                   buffer, 8589934592, MPI_CHAR, MPI_COMM_WORLD);
     MPI_Allgather(buffer, (MPI_Count) 32, MPI_CHAR,
                   buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
+#endif
 }
 
 static void check_eq(MPI_Count a, MPI_Count b, int line)
@@ -114,10 +118,12 @@ static void do_get_elements(void)
 
     printf(">> The following functions call MPI_Get_elements_x\n");
     MPI_Count count_c;
+#if FROOZLE_HAVE_C11_GENERIC
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_c);
     CHECK_EQ(count_c, FROOZLE_TEST_GIANT_COUNT_C);
+#endif
 
     MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
