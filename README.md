@@ -74,7 +74,7 @@ $ ./autogen.sh
 # If you are building from a bootstrapped tarball, you can skip the
 # above autogen.sh step proceed directly to the next steps.
 
-# Run the configure script:
+# Run the configure script
 $ ./configure
 
 # Build Froozle
@@ -83,6 +83,16 @@ $ make -j 8
 # Optionally install Froozle
 $ make install
 ```
+
+# Optional features
+
+`configure` takes the following options:
+
+* `--disable-c11-generic`: This option will disable the `MPI_Count`
+  versions of the C bindings.  Specifically: `MPI_Count` will still be
+  whatever size it will be per (chapter 2 of MPI-3.1), but the C
+  bindings for `MPI_SEND` et al. will only have `int` count-enabled
+  variants, not `MPI_Count`-enabled variants.
 
 # Examples
 
