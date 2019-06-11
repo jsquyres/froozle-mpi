@@ -37,10 +37,8 @@ AH_TOP([/* -*- c -*-
 #ifndef FROOZLE_CONFIG_H
 #define FROOZLE_CONFIG_H
 
-#include "froozle_config_top.h"
 ])
 AH_BOTTOM([
-#include "froozle_config_bottom.h"
 #endif /* FROOZLE_CONFIG_H */
 ])
 
