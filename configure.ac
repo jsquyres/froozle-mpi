@@ -7,7 +7,7 @@
 #
 
 AC_INIT([froozle-mpi],
-        [1.0],
+        [0.5],
         [https://mpi-forum.org/])
 AC_PREREQ(2.60)
 AC_CONFIG_AUX_DIR(config)
