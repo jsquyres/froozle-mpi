@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Send_count(buf, count, datatype, dest, tag, &
+subroutine MPI_Send_x(buf, count, datatype, dest, tag, &
      comm, ierror)
   include 'mpif-constants.h'
   FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
@@ -17,5 +17,5 @@ subroutine MPI_Send_count(buf, count, datatype, dest, tag, &
   integer, intent(in) :: comm
   integer, intent(out) :: ierror
 
-  write(*,*) 'This is mpi module MPI_Send_count'
-end subroutine MPI_Send_count
+  write(*,*) 'This is mpi module MPI_Send_x'
+end subroutine MPI_Send_x

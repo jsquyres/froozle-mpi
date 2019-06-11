@@ -55,7 +55,7 @@ module mpi
        integer, intent(out) :: ierror
      end subroutine MPI_Allgather
 
-     subroutine MPI_Allgather_count(sendbuf, sendcount, sendtype, recvbuf, recvcount, &
+     subroutine MPI_Allgather_x(sendbuf, sendcount, sendtype, recvbuf, recvcount, &
           recvtype, comm, ierror)
        include 'mpif-constants.h'
        FROOZLE_FORTRAN_IGNORE_TKR_PREDECL sendbuf
@@ -68,7 +68,7 @@ module mpi
        integer, intent(in) :: recvtype
        integer, intent(in) :: comm
        integer, intent(out) :: ierror
-     end subroutine MPI_Allgather_count
+     end subroutine MPI_Allgather_x
   end interface MPI_Allgather
 
   interface MPI_Get_elements
@@ -79,6 +79,9 @@ module mpi
        integer, intent(out) :: count, ierr
      end subroutine MPI_Get_elements
 
+     ! The _x version of this interface effectively already exists (as
+     ! a different interface), so we have to give the underlying
+     ! function a different name.
      subroutine MPI_Get_elements_count(status, datatype, count, ierr)
        include 'mpif-constants.h'
        integer, dimension(MPI_STATUS_SIZE), intent(in) :: status
@@ -111,7 +114,7 @@ module mpi
        integer, intent(out) :: ierror
      end subroutine MPI_Send
 
-     subroutine MPI_Send_count(buf, count, datatype, dest, tag, &
+     subroutine MPI_Send_x(buf, count, datatype, dest, tag, &
           comm, ierror)
        include 'mpif-constants.h'
        FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
@@ -122,7 +125,7 @@ module mpi
        integer, intent(in) :: tag
        integer, intent(in) :: comm
        integer, intent(out) :: ierror
-     end subroutine MPI_Send_count
+     end subroutine MPI_Send_x
   end interface MPI_Send
 
   interface MPI_Recv
@@ -140,7 +143,7 @@ module mpi
        integer, intent(out) :: ierror
      end subroutine MPI_Recv
 
-       subroutine MPI_Recv_count(buf, count, datatype, source, tag, &
+       subroutine MPI_Recv_x(buf, count, datatype, source, tag, &
           comm, status, ierror)
        include 'mpif-constants.h'
        FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
@@ -152,7 +155,7 @@ module mpi
        integer, intent(in) :: comm
        integer, dimension(MPI_STATUS_SIZE), intent(out) :: status
        integer, intent(out) :: ierror
-     end subroutine MPI_Recv_count
+     end subroutine MPI_Recv_x
   end interface MPI_Recv
 
   ! Back-end C function to do the work for MPI_Get_elements[_x]
