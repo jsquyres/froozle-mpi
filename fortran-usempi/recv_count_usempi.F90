@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Recv_count(buf, count, datatype, source, tag, &
+subroutine MPI_Recv_x(buf, count, datatype, source, tag, &
      comm, status, ierror)
   include 'mpif-constants.h'
   FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
@@ -18,5 +18,5 @@ subroutine MPI_Recv_count(buf, count, datatype, source, tag, &
   integer, dimension(MPI_STATUS_SIZE), intent(out) :: status
   integer, intent(out) :: ierror
 
-  write(*,*) 'This is mpi module MPI_Recv_count'
-end subroutine MPI_Recv_count
+  write(*,*) 'This is mpi module MPI_Recv_x'
+end subroutine MPI_Recv_x

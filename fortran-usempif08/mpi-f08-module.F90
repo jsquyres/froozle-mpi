@@ -91,7 +91,7 @@ module mpi_f08
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
      end subroutine MPI_Allgather_f08
 
-     subroutine MPI_Allgather_count_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, &
+     subroutine MPI_Allgather_x_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, &
           comm,ierror)
        use :: mpi_f08_types
        implicit none
@@ -106,7 +106,7 @@ module mpi_f08
        TYPE(MPI_Datatype), INTENT(IN) :: sendtype, recvtype
        TYPE(MPI_Comm), INTENT(IN) :: comm
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
-     end subroutine MPI_Allgather_count_f08
+     end subroutine MPI_Allgather_x_f08
   end interface  MPI_Allgather
 
   interface  MPI_Send
@@ -125,7 +125,7 @@ module mpi_f08
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
      end subroutine MPI_Send_f08
 
-     subroutine MPI_Send_count_f08(buf,count,datatype,dest,tag,comm,ierror)
+     subroutine MPI_Send_x_f08(buf,count,datatype,dest,tag,comm,ierror)
        use :: mpi_f08_types
        implicit none
        !DEC$ ATTRIBUTES NO_ARG_CHECK :: buf
@@ -139,7 +139,7 @@ module mpi_f08
        TYPE(MPI_Datatype), INTENT(IN) :: datatype
        TYPE(MPI_Comm), INTENT(IN) :: comm
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
-     end subroutine MPI_Send_count_f08
+     end subroutine MPI_Send_x_f08
   end interface  MPI_Send
 
   interface  MPI_Recv
@@ -159,7 +159,7 @@ module mpi_f08
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
      end subroutine MPI_Recv_f08
 
-     subroutine MPI_Recv_count_f08(buf,count,datatype,source,tag,comm,status,ierror)
+     subroutine MPI_Recv_x_f08(buf,count,datatype,source,tag,comm,status,ierror)
        use :: mpi_f08_types
        implicit none
        !DEC$ ATTRIBUTES NO_ARG_CHECK :: buf
@@ -174,7 +174,7 @@ module mpi_f08
        TYPE(MPI_Comm), INTENT(IN) :: comm
        TYPE(MPI_Status) :: status
        INTEGER, OPTIONAL, INTENT(OUT) :: ierror
-     end subroutine MPI_Recv_count_f08
+     end subroutine MPI_Recv_x_f08
   end interface  MPI_Recv
 
   ! Back-end C function to do the work for MPI_Get_elements[_x]

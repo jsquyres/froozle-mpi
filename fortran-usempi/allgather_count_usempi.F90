@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Allgather_count(sendbuf, sendcount, sendtype, recvbuf, recvcount, &
+subroutine MPI_Allgather_x(sendbuf, sendcount, sendtype, recvbuf, recvcount, &
      recvtype, comm, ierror)
   include 'mpif-constants.h'
   FROOZLE_FORTRAN_IGNORE_TKR_PREDECL sendbuf
@@ -19,5 +19,5 @@ subroutine MPI_Allgather_count(sendbuf, sendcount, sendtype, recvbuf, recvcount,
   integer, intent(in) :: comm
   integer, intent(out) :: ierror
 
-  write(*,*) 'This is mpi module MPI_Allgather_count'
-end subroutine MPI_Allgather_count
+  write(*,*) 'This is mpi module MPI_Allgather_x'
+end subroutine MPI_Allgather_x
