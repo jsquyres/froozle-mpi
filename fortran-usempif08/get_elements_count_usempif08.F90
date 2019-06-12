@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Get_elements_count_f08(status, datatype, count, ierr)
+subroutine MPI_Get_elements_y_f08(status, datatype, count, ierr)
   use :: mpi_f08_types
   implicit none
 
@@ -16,9 +16,9 @@ subroutine MPI_Get_elements_count_f08(status, datatype, count, ierr)
 
   integer :: dummy
 
-  write(*,*) 'This is mpi_f08 module MPI_Get_elements_count_f08'
+  write(*,*) 'This is mpi_f08 module MPI_Get_elements_y_f08'
 
   ! Do the back-end work in C -- the strong type safety in Fortran is
   ! too restrictive.
   call froozle_get_elements_f(datatype, dummy, count)
-end subroutine MPI_Get_elements_count_f08
+end subroutine MPI_Get_elements_y_f08
