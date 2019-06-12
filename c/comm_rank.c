@@ -11,7 +11,7 @@
 
 int MPI_Comm_rank(MPI_Comm comm, int *rank)
 {
-    printf("This is C MPI_Comm_rank\n");
+    printf("This is C %s\n", __func__);
 
     return MPI_SUCCESS;
 }

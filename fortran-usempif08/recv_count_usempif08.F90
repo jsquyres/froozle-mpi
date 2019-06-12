@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Recv_x_f08(buf,count,datatype,source,tag,comm,status,ierror)
+subroutine MPI_Recv_y_f08(buf,count,datatype,source,tag,comm,status,ierror)
   use :: mpi_f08_types
   implicit none
   !DEC$ ATTRIBUTES NO_ARG_CHECK :: buf
@@ -21,5 +21,5 @@ subroutine MPI_Recv_x_f08(buf,count,datatype,source,tag,comm,status,ierror)
   TYPE(MPI_Status) :: status
   INTEGER, OPTIONAL, INTENT(OUT) :: ierror
 
-  write(*,*) 'This is mpi_f08 module MPI_Recv_x_f08'
-end subroutine MPI_Recv_x_f08
+  write(*,*) 'This is mpi_f08 module MPI_Recv_y_f08'
+end subroutine MPI_Recv_y_f08

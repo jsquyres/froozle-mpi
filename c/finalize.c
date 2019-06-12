@@ -11,7 +11,7 @@
 
 int MPI_Finalize(void)
 {
-    printf("This is C MPI_Finalize\n");
+    printf("This is C %s\n", __func__);
 
     return MPI_SUCCESS;
 }

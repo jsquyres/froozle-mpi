@@ -19,7 +19,7 @@ subroutine do_sends()
   call MPI_Send(buffer, 32, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
   call MPI_Send(buffer, i, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
 
-  write(*,*) '>> The following functions should call MPI_Send_count'
+  write(*,*) '>> The following functions should call MPI_Send_y'
   call MPI_Send(buffer, bigI, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
   call MPI_Send(buffer, 858993459_MPI_COUNT_KIND, MPI_CHARACTER, &
        0, 0, MPI_COMM_WORLD, ierr)
@@ -41,7 +41,7 @@ subroutine do_recvs()
   call MPI_Recv(buffer, i, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
        MPI_STATUS_IGNORE, ierr)
 
-  write(*,*) '>> The following functions should call MPI_Recv_count'
+  write(*,*) '>> The following functions should call MPI_Recv_y'
   call MPI_Recv(buffer, bigI, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
        MPI_STATUS_IGNORE, ierr)
   call MPI_Recv(buffer, 8589934592_MPI_COUNT_KIND, MPI_CHARACTER, &
@@ -65,7 +65,7 @@ subroutine do_allgathers()
   call MPI_Allgather(buffer, i, MPI_CHARACTER, &
        buffer, i, MPI_CHARACTER, &
        MPI_COMM_WORLD, ierr)
-  write(*,*) '>> The following functions should call MPI_Allgather_count'
+  write(*,*) '>> The following functions should call MPI_Allgather_y'
   call MPI_Allgather(buffer, bigI, MPI_CHARACTER, &
        buffer, bigI, MPI_CHARACTER, &
        MPI_COMM_WORLD, ierr)
@@ -111,7 +111,7 @@ subroutine do_get_elements()
   call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, i, ierr)
   call check_eq_i(i, MPI_UNDEFINED)
 
-  write(*,*) ">> The following functions call MPI_Get_elements_count"
+  write(*,*) ">> The following functions call MPI_Get_elements_y"
   call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, c, ierr)
   call check_eq_c(c, INT(FROOZLE_TEST_SMALL_COUNT, KIND=MPI_COUNT_KIND))
   call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, c, ierr)

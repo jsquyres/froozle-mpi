@@ -25,6 +25,10 @@ before_install:
 
 install:
     - ./autogen.sh
+    - ./configure --disable-c11-generic
+    - make -j4
+    - make distcheck
+    - make distclean
     - ./configure
     - make -j4
     - make distcheck

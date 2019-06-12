@@ -9,12 +9,12 @@
 #include "mpi.h"
 
 
-int MPI_Allgather_x(const void *sendbuf, MPI_Count sendcount,
+int MPI_Allgather_y(const void *sendbuf, MPI_Count sendcount,
                     MPI_Datatype sendtype,
                     void *recvbuf, MPI_Count recvcount,
                     MPI_Datatype recvtype, MPI_Comm comm)
 {
-    printf("This is C MPI_Allgather_x\n");
+    printf("This is C %s\n", __func__);
 
     return MPI_SUCCESS;
 }
