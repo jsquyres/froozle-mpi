@@ -41,13 +41,55 @@ the MPI spec, all the mpi_f08 module subroutines have unique symbols,
 so they *all* have their own implementations (unlike the "mpi"
 module).
 
+# Rationale
+
+## The `_y` suffix
+
+The `MPI_Count`-variant symbols in C and Fortran have a suffix of `_y`
+-- not `_x`, as has been long-discussed in the Forum.  We chose `_y`
+for the following reasons:
+
+1. It's just as short as `_x`.
+1. MPI-3.0 added several `_x` functions (e.g.,
+   MPI_GET_ELEMENTS_COUNT_X).
+   1. We wanted to make a clean separation between the MPI-3 functions
+      (i.e,. the `_x` functions) and the new symbols added in MPI-4
+      (i.e., the `_y` functions).
+   1. There is actually a problem with the Fortran `mpi` and `mpi_f08`
+      modules such that we *couldn't* have the underlying subroutine
+      names be `_x` because they would conflict with the
+      already-existing MPI-3 functions.  For example, the Fortran
+      language does not allow the same subroutine `MPI_GET_ELEMENTS_X`
+      to be in multiple explicit interfaces (i.e., `MPI_GET_ELEMENTS`
+      and `MPI_GET_ELEMENTS_X`).  Hence, we *had* to have a different
+      suffix for at least the `_x` functions added in MPI-3 in the
+      Fortran modules.  It seemed simpler to have a different suffix
+      for *all* functions (in all language bindings) rather than to
+      create a narrowly-scoped exception.
+
+## Fortran and C++ do not call C
+
+The Fortran bindings do not call the underlying C bindings, mainly
+because this is just a proof-of-concept implementation.  They could
+easily call the underlying C APIs, just like a real implementation --
+we just did not bother to do so.
+
+The C++ bindings, however, have a technical reason why they do not
+call the underlying C bindings.  Specifically: it is not possible for
+the C++ bindings to directly call the C bindings in this design
+because the C and C++ bindings have the same name.  There's no way to
+force the invocation of the C `MPI_Send()` from within either of the
+C++ `MPI_Send()` overloaded functions.  Instead, the C++ bindings in a
+real implementation would need to call some other back-end
+function(s).
+
 # Prerequisites
 
 You must have a C, C++, and Fortran compiler available to compile
 Froozle.
 
 If you are compiling from a git clone (i.e., if you need to run
-`autogen.sh`, you will need the GNU Autotools installed:
+`autogen.sh`), you will need the GNU Autotools installed:
 
 * Autoconf
 * Automake
@@ -55,12 +97,12 @@ If you are compiling from a git clone (i.e., if you need to run
 
 # Limitations
 
-The `configure` script does not properly check if your Fortran
-compiler does not support "ignore TKR" functionality, nor does it
-check if your compiler does not support Fortran'08 functionality.
-
-If your Fortran build fails in weird ways, you might need a newer
-Fortran compiler.
+1. The `configure` script does not properly check if your Fortran
+   compiler does not support "ignore TKR" functionality, nor does it
+   check if your compiler does not support Fortran'08 functionality.
+1. If your Fortran build fails in weird ways, you might need a newer
+   Fortran compiler.
+1. No `PMPI_`-prefixed bindings are included.
 
 # Build instructions
 
