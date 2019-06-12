@@ -11,7 +11,7 @@
 
 int MPI_Comm_size(MPI_Comm comm, int *size)
 {
-    printf("This is C MPI_Comm_size\n");
+    printf("This is C %s\n", __func__);
 
     return MPI_SUCCESS;
 }

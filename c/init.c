@@ -11,7 +11,7 @@
 
 int MPI_Init(int *argc, char ***argv)
 {
-    printf("This is C MPI_Init\n");
+    printf("This is C %s\n", __func__);
 
 #if FROOZLE_HAVE_C11_GENERIC
     printf("NOTE: This Froozle built with C11 _Generic support.  Yay!\n");

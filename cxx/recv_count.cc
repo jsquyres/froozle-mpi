@@ -14,7 +14,7 @@ int MPI_Recv(void *buf, MPI_Count count,
              int source, int tag, MPI_Comm comm,
              MPI_Status *status)
 {
-    printf("This is C++ MPI_Recv (with count params)\n");
+    printf("This is C++ %s (with count params)\n", __func__);
 
     return MPI_SUCCESS;
 }

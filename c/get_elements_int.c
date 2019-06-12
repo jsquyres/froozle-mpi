@@ -15,7 +15,7 @@
 int MPI_Get_elements(const MPI_Status *status,
                      MPI_Datatype datatype, int *count)
 {
-    printf("This is C MPI_Get_elements\n");
+    printf("This is C %s\n", __func__);
 
     // The test programs are passing in bogus statuses (e.g.,
     // MPI_STATUS_IGNORE), so generate a status here and set a value
