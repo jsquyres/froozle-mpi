@@ -10,7 +10,7 @@
 #include "globals.h"
 
 
-int MPI_Get_elements_y(const MPI_Status *status,
+int MPI_Get_elements_l(const MPI_Status *status,
                        MPI_Datatype datatype, MPI_Count *count)
 {
     printf("This is C %s\n", __func__);

@@ -43,18 +43,19 @@ module).
 
 # Rationale
 
-## The `_y` suffix
+## The `_l` suffix
 
-The `MPI_Count`-variant symbols in C and Fortran have a suffix of `_y`
--- not `_x`, as has been long-discussed in the Forum.  We chose `_y`
-for the following reasons:
+The `MPI_Count`-variant symbols in C and Fortran have a suffix of `_l`
+(lower case "L") -- not `_x`, as has been long-discussed in the Forum.
+We chose `_l` for the following reasons:
 
 1. It's just as short as `_x`.
+1. `_l` stands for "Large".
 1. MPI-3.0 added several `_x` functions (e.g.,
    MPI_GET_ELEMENTS_COUNT_X).
    1. We wanted to make a clean separation between the MPI-3 functions
       (i.e,. the `_x` functions) and the new symbols added in MPI-4
-      (i.e., the `_y` functions).
+      (i.e., the `_l` functions).
    1. There is actually a problem with the Fortran `mpi` and `mpi_f08`
       modules such that we *couldn't* have the underlying subroutine
       names be `_x` because they would conflict with the

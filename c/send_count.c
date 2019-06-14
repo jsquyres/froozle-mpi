@@ -9,7 +9,7 @@
 #include "mpi.h"
 
 
-int MPI_Send_y(const void *buf, MPI_Count count,
+int MPI_Send_l(const void *buf, MPI_Count count,
                MPI_Datatype datatype,
                int dest, int tag, MPI_Comm comm)
 {
