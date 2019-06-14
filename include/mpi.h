@@ -47,42 +47,43 @@ int MPI_Get_elements_x(const MPI_Status *status,
     _Generic(count,                                         \
              default: MPI_Send,                             \
              int: MPI_Send,                                 \
-             MPI_Count: MPI_Send_y                          \
+             MPI_Count: MPI_Send_l                          \
              )(buf, count, dt, rank, tag, comm)
 
 #define MPI_Recv(buf, count, dt, rank, tag, comm, status)   \
     _Generic(count,                                         \
              default: MPI_Recv,                             \
              int: MPI_Recv,                                 \
-             MPI_Count: MPI_Recv_y                          \
+             MPI_Count: MPI_Recv_l                          \
              )(buf, count, dt, rank, tag, comm, status)
 
 #define MPI_Allgather(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm) \
     _Generic(sendcount,                                                 \
              default: MPI_Allgather,                                    \
              int: MPI_Allgather,                                        \
-             MPI_Count: MPI_Allgather_y                                 \
+             MPI_Count: MPI_Allgather_l                                 \
              )(sendbuf, sendcount, sendtype, recvbuf, recvcount, recvtype, comm)
+
 
 #define MPI_Get_elements(status, datatype, count)         \
     _Generic(count,                                       \
              default: MPI_Get_elements,                   \
              int *: MPI_Get_elements,                     \
-             MPI_Count *: MPI_Get_elements_y              \
+             MPI_Count *: MPI_Get_elements_l              \
              )(status, datatype, count)
 
-int MPI_Send_y(const void *buf, MPI_Count count,
+int MPI_Send_l(const void *buf, MPI_Count count,
                MPI_Datatype datatype,
                int dest, int tag, MPI_Comm comm);
-int MPI_Recv_y(void *buf, MPI_Count count,
+int MPI_Recv_l(void *buf, MPI_Count count,
                MPI_Datatype datatype,
                int source, int tag, MPI_Comm comm,
                MPI_Status *status);
-int MPI_Allgather_y(const void *sendbuf, MPI_Count sendcount,
+int MPI_Allgather_l(const void *sendbuf, MPI_Count sendcount,
                     MPI_Datatype sendtype,
                     void *recvbuf, MPI_Count recvcount,
                     MPI_Datatype recvtype, MPI_Comm comm);
-int MPI_Get_elements_y(const MPI_Status *status,
+int MPI_Get_elements_l(const MPI_Status *status,
                        MPI_Datatype datatype,
                        MPI_Count *count);
 

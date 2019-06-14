@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Send_y_f08(buf,count,datatype,dest,tag,comm,ierror)
+subroutine MPI_Send_l_f08(buf,count,datatype,dest,tag,comm,ierror)
   use :: mpi_f08_types
   implicit none
   !DEC$ ATTRIBUTES NO_ARG_CHECK :: buf
@@ -20,5 +20,5 @@ subroutine MPI_Send_y_f08(buf,count,datatype,dest,tag,comm,ierror)
   TYPE(MPI_Comm), INTENT(IN) :: comm
   INTEGER, OPTIONAL, INTENT(OUT) :: ierror
 
-  write(*,*) 'This is mpi_f08 module MPI_Send_y_f08'
-end subroutine MPI_Send_y_f08
+  write(*,*) 'This is mpi_f08 module MPI_Send_l_f08'
+end subroutine MPI_Send_l_f08

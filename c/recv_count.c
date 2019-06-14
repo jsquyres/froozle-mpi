@@ -9,7 +9,7 @@
 #include "mpi.h"
 
 
-int MPI_Recv_y(void *buf, MPI_Count count,
+int MPI_Recv_l(void *buf, MPI_Count count,
                MPI_Datatype datatype,
                int source, int tag, MPI_Comm comm,
                MPI_Status *status)
