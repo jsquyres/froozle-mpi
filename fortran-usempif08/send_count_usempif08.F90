@@ -8,11 +8,6 @@
 subroutine MPI_Send_l_f08(buf,count,datatype,dest,tag,comm,ierror)
   use :: mpi_f08_types
   implicit none
-  !DEC$ ATTRIBUTES NO_ARG_CHECK :: buf
-  !GCC$ ATTRIBUTES NO_ARG_CHECK :: buf
-  !$PRAGMA IGNORE_TKR buf
-  !DIR$ IGNORE_TKR buf
-  !IBM* IGNORE_TKR buf
   FROOZLE_FORTRAN_IGNORE_TKR_TYPE, INTENT(IN) :: buf
   INTEGER, INTENT(IN) :: dest, tag
   INTEGER(KIND=MPI_COUNT_KIND), INTENT(IN) :: count
@@ -21,4 +16,6 @@ subroutine MPI_Send_l_f08(buf,count,datatype,dest,tag,comm,ierror)
   INTEGER, OPTIONAL, INTENT(OUT) :: ierror
 
   write(*,*) 'This is mpi_f08 module MPI_Send_l_f08'
+
+  if (present(ierror)) ierror = MPI_SUCCESS
 end subroutine MPI_Send_l_f08

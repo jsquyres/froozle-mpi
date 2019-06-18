@@ -9,4 +9,6 @@ subroutine MPI_Init(ierror)
   integer :: val
 
   write(*,*) 'This is mpif.h MPI_Init'
+
+  ierror = MPI_SUCCESS
 end subroutine MPI_Init

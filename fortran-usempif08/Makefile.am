@@ -7,8 +7,10 @@ lib_LTLIBRARIES = libmpi_usempif08_types.la libmpi_usempif08.la
 libmpi_usempif08_types_la_SOURCES = \
         mpi-f08-types-module.F90
 
+nodist_libmpi_usempif08_la_SOURCES = \
+        mpi-f08-module.F90
+
 libmpi_usempif08_la_SOURCES = \
-        mpi-f08-module.F90 \
         globals-usempif08.c \
         allgather_int_usempif08.F90 \
         allgather_count_usempif08.F90 \

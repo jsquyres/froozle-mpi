@@ -7,7 +7,6 @@
 
 subroutine MPI_Send(buf, count, datatype, dest, tag, &
      comm, ierror)
-  FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
   FROOZLE_FORTRAN_IGNORE_TKR_TYPE, intent(in) :: buf
   integer, intent(in) :: count
   integer, intent(in) :: datatype
@@ -17,4 +16,6 @@ subroutine MPI_Send(buf, count, datatype, dest, tag, &
   integer, intent(out) :: ierror
 
   write(*,*) 'This is mpi module MPI_Send'
+
+  ierror = MPI_SUCCESS
 end subroutine MPI_Send

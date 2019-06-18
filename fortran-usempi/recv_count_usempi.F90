@@ -8,7 +8,6 @@
 subroutine MPI_Recv_l(buf, count, datatype, source, tag, &
      comm, status, ierror)
   include 'mpif-constants.h'
-  FROOZLE_FORTRAN_IGNORE_TKR_PREDECL buf
   FROOZLE_FORTRAN_IGNORE_TKR_TYPE :: buf
   integer(KIND=MPI_COUNT_KIND), intent(in) :: count
   integer, intent(in) :: datatype
@@ -19,4 +18,7 @@ subroutine MPI_Recv_l(buf, count, datatype, source, tag, &
   integer, intent(out) :: ierror
 
   write(*,*) 'This is mpi module MPI_Recv_l'
+
+  status(1) = 0
+  ierror = MPI_SUCCESS
 end subroutine MPI_Recv_l

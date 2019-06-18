@@ -9,11 +9,6 @@ subroutine MPI_Allgather_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvty
      comm,ierror)
   use :: mpi_f08_types
   implicit none
-  !DEC$ ATTRIBUTES NO_ARG_CHECK :: sendbuf, recvbuf
-  !GCC$ ATTRIBUTES NO_ARG_CHECK :: sendbuf, recvbuf
-  !$PRAGMA IGNORE_TKR sendbuf, recvbuf
-  !DIR$ IGNORE_TKR sendbuf, recvbuf
-  !IBM* IGNORE_TKR sendbuf, recvbuf
   FROOZLE_FORTRAN_IGNORE_TKR_TYPE, INTENT(IN) :: sendbuf
   FROOZLE_FORTRAN_IGNORE_TKR_TYPE :: recvbuf
   INTEGER, INTENT(IN) :: sendcount, recvcount
@@ -22,4 +17,6 @@ subroutine MPI_Allgather_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvty
   INTEGER, OPTIONAL, INTENT(OUT) :: ierror
 
   write(*,*) 'This is mpi_f08 module MPI_Allgather_f08'
+
+  if (present(ierror)) ierror = MPI_SUCCESS
 end subroutine MPI_Allgather_f08
