@@ -8,4 +8,6 @@ subroutine MPI_Finalize(ierror)
   integer, intent(out) :: ierror
 
   write(*,*) 'This is mpif.h MPI_Finalize'
+
+  ierror = MPI_SUCCESS
 end subroutine MPI_Finalize

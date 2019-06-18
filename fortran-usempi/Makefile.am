@@ -4,8 +4,10 @@ AM_FCFLAGS = -I$(TOP_SRCDIR)/include
 
 lib_LTLIBRARIES = libmpi_usempi.la
 
+nodist_libmpi_usempi_la_SOURCES = \
+        mpi-module.F90
+
 libmpi_usempi_la_SOURCES = \
-        mpi-module.F90 \
         allgather_int_usempi.F90 \
         allgather_count_usempi.F90 \
         get_elements_int_usempi.F90 \

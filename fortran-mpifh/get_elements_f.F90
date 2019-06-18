@@ -19,4 +19,6 @@ subroutine MPI_Get_elements(status, datatype, count, ierr)
   ! Do the back-end work in C -- the strong type safety in Fortran is
   ! too restrictive.
   call froozle_get_elements_f(datatype, count, dummy)
+
+  ierr = MPI_SUCCESS
 end subroutine MPI_Get_elements
