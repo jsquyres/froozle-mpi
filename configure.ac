@@ -106,7 +106,7 @@ AC_DEFINE_UNQUOTED([FROOZLE_TEST_GIANT_COUNT_F],
 
 dnl ----------------------------------------------------------------
 
-AC_CONFIG_HEADER([include/mpi-config.h])
+AC_CONFIG_HEADER([include/mpi.h])
 AC_CONFIG_HEADER([include/froozle_config_fortran.h])
 
 AC_OUTPUT([

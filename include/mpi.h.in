@@ -7,13 +7,12 @@
 
 /***************************************************************/
 
-#include "mpi-config.h"
-
-/***************************************************************/
-
 #ifndef FROOZLE_BUILDING
 #define FROOZLE_BUILDING 0
 #endif
+
+// Substituted in by configure script
+#define FROOZLE_HAVE_C11_GENERIC @FROOZLE_HAVE_C11_GENERIC@
 
 /***************************************************************/
 
@@ -105,18 +104,12 @@ int MPI_Get_elements_x(const MPI_Status *status,
                        MPI_Count *count);
 
 
-// This comes from mpi-config.h
-#define FROOZLE_WANT_C11_GENERIC FROOZLE_HAVE_C11_GENERIC
-
-// We don't want _Generic if we're building Froozle itself
-#if FROOZLE_BUILDING
-#undef FROOZLE_WANT_C11_GENERIC
+// We don't want _Generic if we're building Froozle itself, or if we're in C++
+#if FROOZLE_BUILDING || defined(c_plusplus) || defined(__cplusplus)
 #define FROOZLE_WANT_C11_GENERIC 0
-#endif
-
-// We also don't want _Generic if we're in C++
-#if defined(c_plusplus) || defined(__cplusplus)
-#undef FROOZLE_WANT_C11_GENERIC
+#elif FROOZLE_HAVE_C11_GENERIC
+#define FROOZLE_WANT_C11_GENERIC 1
+#else
 #define FROOZLE_WANT_C11_GENERIC 0
 #endif
 
