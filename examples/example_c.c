@@ -43,6 +43,43 @@ static void do_sends(void)
     MPI_Send(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     MPI_Send(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 #endif
+
+    // Let's also make sure that taking function pointers of both C
+    // functions work (i.e., the back-end MPI_Send function and the
+    // MPI_Send_l function).
+    typedef int (*int_fn_t)(const void *buf, int count,
+                            MPI_Datatype datatype,
+                            int dest, int tag, MPI_Comm comm);
+    typedef int (*count_fn_t)(const void *buf, MPI_Count count,
+                              MPI_Datatype datatype,
+                              int dest, int tag, MPI_Comm comm);
+
+    // Note that the assignment from "MPI_Send" works even though
+    // there is a #define for "MPI_Send" to a C11 _Generic expression
+    // because the assignment below does not use () after MPI_Send, and
+    // therefore the #define does not actually pre-processor replace the
+    // "MPI_Send" below with the C11 _Generic expression.  Hence,
+    // "MPI_Send" below returns a pointer to the int flavor of the MPI_Send
+    // function.
+
+    // Now that we have function pointers, the normal C promotion
+    // rules apply to the count parameter.
+    printf(">> The following functions should call MPI_Send (with int params)\n");
+    int_fn_t int_fn = MPI_Send;
+    int_fn(buffer, i, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    int_fn(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+
+#if FROOZLE_HAVE_C11_GENERIC
+    // JMS Per the MPI Forum Virtual meeting on 2018-07-23, the
+    // MPI_Send_l function a) will be renamed MPI_Send_x, and b) will always
+    // be available, even if C11 _Generic isn't.  A future pull request will
+    // make these changes.
+    printf(">> The following functions should call MPI_Send_l\n");
+    count_fn_t count_fn = MPI_Send_l;
+    count_fn(buffer, i, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    count_fn(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    count_fn(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+#endif
 }
 
 static void do_recvs(void)
