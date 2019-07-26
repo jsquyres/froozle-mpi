@@ -8,7 +8,6 @@
 /***************************************************************/
 
 #include "mpi-config.h"
-#include "mpi-common.h"
 
 /***************************************************************/
 
@@ -18,30 +17,110 @@
 
 /***************************************************************/
 
-// Always declare the _int versions
+#if defined(c_plusplus) || defined(__cplusplus)
+extern "C" {
+#endif
+
+struct froozle_comm;
+struct froozle_datatype;
+struct froozle_status;
+
+typedef struct froozle_comm *MPI_Comm;
+typedef struct froozle_datatype *MPI_Datatype;
+
+typedef long MPI_Count;
+
+enum {
+    MPI_SUCCESS
+};
+
+extern const int MPI_UNDEFINED;
+
+extern MPI_Comm MPI_COMM_WORLD;
+
+extern MPI_Datatype MPI_INT;
+extern MPI_Datatype MPI_CHAR;
+
+typedef struct froozle_status {
+    // Public fields
+    int MPI_SOURCE;
+    int MPI_TAG;
+    int MPI_ERROR;
+
+    // Private fields
+    MPI_Count count;
+} MPI_Status;
+
+extern MPI_Status *MPI_STATUS_IGNORE;
+
+/***************************************************************/
+
+// These functions do not have count arguments, and are therefore
+// shared between both C and C++ interfaces.
+
+int MPI_Init(int *argc, char ***argv);
+int MPI_Comm_rank(MPI_Comm comm, int *rank);
+int MPI_Comm_size(MPI_Comm comm, int *size);
+int MPI_Finalize(void);
+
+/***************************************************************/
+
+// These functions have int and count flavors
 
 int MPI_Send(const void *buf, int count,
              MPI_Datatype datatype,
              int dest, int tag, MPI_Comm comm);
+int MPI_Send_l(const void *buf, MPI_Count count,
+               MPI_Datatype datatype,
+               int dest, int tag, MPI_Comm comm);
+
 int MPI_Recv(void *buf, int count,
              MPI_Datatype datatype,
              int source, int tag, MPI_Comm comm,
              MPI_Status *status);
+int MPI_Recv_l(void *buf, MPI_Count count,
+               MPI_Datatype datatype,
+               int source, int tag, MPI_Comm comm,
+               MPI_Status *status);
+
 int MPI_Allgather(const void *sendbuf, int sendcount,
                   MPI_Datatype sendtype,
                   void *recvbuf, int recvcount,
                   MPI_Datatype recvtype, MPI_Comm comm);
+int MPI_Allgather_l(const void *sendbuf, MPI_Count sendcount,
+                    MPI_Datatype sendtype,
+                    void *recvbuf, MPI_Count recvcount,
+                    MPI_Datatype recvtype, MPI_Comm comm);
+
 int MPI_Get_elements(const MPI_Status *status,
                      MPI_Datatype datatype, int *count);
+int MPI_Get_elements_l(const MPI_Status *status,
+                       MPI_Datatype datatype,
+                       MPI_Count *count);
 
 // This is an MPI_Count-enabled function, but it is in MPI-3.0.  So it
-// is *always* defined.
+// has no "int" counterpart.
 int MPI_Get_elements_x(const MPI_Status *status,
                        MPI_Datatype datatype,
                        MPI_Count *count);
 
 
-#if FROOZLE_HAVE_C11_GENERIC && !FROOZLE_BUILDING
+// This comes from mpi-config.h
+#define FROOZLE_WANT_C11_GENERIC FROOZLE_HAVE_C11_GENERIC
+
+// We don't want _Generic if we're building Froozle itself
+#if FROOZLE_BUILDING
+#undef FROOZLE_WANT_C11_GENERIC
+#define FROOZLE_WANT_C11_GENERIC 0
+#endif
+
+// We also don't want _Generic if we're in C++
+#if defined(c_plusplus) || defined(__cplusplus)
+#undef FROOZLE_WANT_C11_GENERIC
+#define FROOZLE_WANT_C11_GENERIC 0
+#endif
+
+#if FROOZLE_WANT_C11_GENERIC
 
 #define MPI_Send(buf, count, dt, rank, tag, comm)           \
     _Generic(count,                                         \
@@ -72,21 +151,10 @@ int MPI_Get_elements_x(const MPI_Status *status,
              MPI_Count *: MPI_Get_elements_l              \
              )(status, datatype, count)
 
-int MPI_Send_l(const void *buf, MPI_Count count,
-               MPI_Datatype datatype,
-               int dest, int tag, MPI_Comm comm);
-int MPI_Recv_l(void *buf, MPI_Count count,
-               MPI_Datatype datatype,
-               int source, int tag, MPI_Comm comm,
-               MPI_Status *status);
-int MPI_Allgather_l(const void *sendbuf, MPI_Count sendcount,
-                    MPI_Datatype sendtype,
-                    void *recvbuf, MPI_Count recvcount,
-                    MPI_Datatype recvtype, MPI_Comm comm);
-int MPI_Get_elements_l(const MPI_Status *status,
-                       MPI_Datatype datatype,
-                       MPI_Count *count);
+#endif // FROOZLE_WANT_C11_GENERIC
 
-#endif // FROOZLE_HAVE_C11_GENERIC && !FROOZLE_BUILDING
+#if defined(c_plusplus) || defined(__cplusplus)
+}
+#endif
 
 #endif // MPI_H

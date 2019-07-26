@@ -3,7 +3,6 @@
 SUBDIRS = \
         include \
         c \
-        cxx \
         fortran-mpifh \
         fortran-usempi \
         fortran-usempif08 \
