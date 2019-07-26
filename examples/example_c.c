@@ -33,20 +33,18 @@ static void do_sends(void)
     short smallI = 16;
     MPI_Send(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 
-#if FROOZLE_HAVE_C11_GENERIC
-    printf(">> The following functions should call MPI_Send_l\n");
     MPI_Count bigI = 8589934592;
+#if FROOZLE_HAVE_C11_GENERIC
+    printf(">> The following functions should call MPI_Send_x\n");
     MPI_Send(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 
-    // This one will generate a compiler warning (or error!) if you
-    // have no C11 _Generic support.
     MPI_Send(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     MPI_Send(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 #endif
 
     // Let's also make sure that taking function pointers of both C
     // functions work (i.e., the back-end MPI_Send function and the
-    // MPI_Send_l function).
+    // MPI_Send_x function).
     typedef int (*int_fn_t)(const void *buf, int count,
                             MPI_Datatype datatype,
                             int dest, int tag, MPI_Comm comm);
@@ -71,15 +69,23 @@ static void do_sends(void)
 
 #if FROOZLE_HAVE_C11_GENERIC
     // JMS Per the MPI Forum Virtual meeting on 2018-07-23, the
-    // MPI_Send_l function a) will be renamed MPI_Send_x, and b) will always
+    // MPI_Send_x function a) will be renamed MPI_Send_x, and b) will always
     // be available, even if C11 _Generic isn't.  A future pull request will
     // make these changes.
-    printf(">> The following functions should call MPI_Send_l\n");
-    count_fn_t count_fn = MPI_Send_l;
+    printf(">> The following functions should call MPI_Send_x\n");
+    count_fn_t count_fn = MPI_Send_x;
     count_fn(buffer, i, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     count_fn(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
     count_fn(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 #endif
+
+    printf(">> The following functions should call MPI_Send_x\n");
+    MPI_Send_x(buffer, i, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 }
 
 static void do_recvs(void)
@@ -94,9 +100,9 @@ static void do_recvs(void)
     MPI_Recv(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
-#if FROOZLE_HAVE_C11_GENERIC
-    printf(">> The following functions should call MPI_Recv_l\n");
     MPI_Count bigI = 8589934592;
+#if FROOZLE_HAVE_C11_GENERIC
+    printf(">> The following functions should call MPI_Recv_x\n");
     MPI_Recv(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
@@ -105,6 +111,19 @@ static void do_recvs(void)
     MPI_Recv(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 #endif
+
+    printf(">> The following functions should call MPI_Recv_x\n");
+    MPI_Recv_x(buffer, i, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv_x(buffer, 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    MPI_Recv_x(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+    MPI_Recv_x(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+
+    MPI_Recv_x(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+    MPI_Recv_x(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
 }
 
 static void do_allgathers(void)
@@ -121,9 +140,9 @@ static void do_allgathers(void)
     MPI_Allgather(buffer, smallI, MPI_CHAR,
                   buffer, smallI, MPI_CHAR, MPI_COMM_WORLD);
 
-#if FROOZLE_HAVE_C11_GENERIC
-    printf(">> The following functions should call MPI_Allgather_l\n");
     MPI_Count bigI = 8589934592;
+#if FROOZLE_HAVE_C11_GENERIC
+    printf(">> The following functions should call MPI_Allgather_x\n");
     MPI_Allgather(buffer, bigI, MPI_CHAR,
                   buffer, bigI, MPI_CHAR, MPI_COMM_WORLD);
     MPI_Allgather(buffer, 8589934592, MPI_CHAR,
@@ -131,6 +150,20 @@ static void do_allgathers(void)
     MPI_Allgather(buffer, (MPI_Count) 32, MPI_CHAR,
                   buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
 #endif
+
+    printf(">> The following functions should call MPI_Allgather_x\n");
+    MPI_Allgather_x(buffer, i, MPI_CHAR,
+                    buffer, i, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_x(buffer, 32, MPI_CHAR,
+                    buffer, 32, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_x(buffer, smallI, MPI_CHAR,
+                    buffer, smallI, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_x(buffer, bigI, MPI_CHAR,
+                    buffer, bigI, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_x(buffer, 8589934592, MPI_CHAR,
+                    buffer, 8589934592, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_x(buffer, (MPI_Count) 32, MPI_CHAR,
+                    buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
 }
 
 static void check_eq(MPI_Count a, MPI_Count b, int line)
@@ -155,7 +188,7 @@ static void do_get_elements(void)
 
     MPI_Count count_c;
 #if FROOZLE_HAVE_C11_GENERIC
-    printf(">> The following functions call MPI_Get_elements_l\n");
+    printf(">> The following functions call MPI_Get_elements_x\n");
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_c);

@@ -9,7 +9,7 @@
 #include "mpi.h"
 
 
-int MPI_Allgather_l(const void *sendbuf, MPI_Count sendcount,
+int MPI_Allgather_x(const void *sendbuf, MPI_Count sendcount,
                     MPI_Datatype sendtype,
                     void *recvbuf, MPI_Count recvcount,
                     MPI_Datatype recvtype, MPI_Comm comm)

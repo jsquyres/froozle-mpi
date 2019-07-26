@@ -5,7 +5,7 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine MPI_Allgather_l_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, &
+subroutine MPI_Allgather_x_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recvtype, &
      comm,ierror)
   use :: mpi_f08_types
   implicit none
@@ -16,7 +16,7 @@ subroutine MPI_Allgather_l_f08(sendbuf,sendcount,sendtype,recvbuf,recvcount,recv
   TYPE(MPI_Comm), INTENT(IN) :: comm
   INTEGER, OPTIONAL, INTENT(OUT) :: ierror
 
-  write(*,*) 'This is mpi_f08 module MPI_Allgather_l_f08'
+  write(*,*) 'This is mpi_f08 module MPI_Allgather_x_f08'
 
   if (present(ierror)) ierror = MPI_SUCCESS
-end subroutine MPI_Allgather_l_f08
+end subroutine MPI_Allgather_x_f08

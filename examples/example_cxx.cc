@@ -33,11 +33,11 @@ static void do_sends(void)
     short smallI = 16;
     MPI_Send(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 
-    printf(">> The following functions should call MPI_Send_l\n");
+    printf(">> The following functions should call MPI_Send_x\n");
     MPI_Count bigI = 8589934592;
-    MPI_Send_l(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
-    MPI_Send_l(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
-    MPI_Send_l(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_x(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 }
 
 static void do_recvs(void)
@@ -52,13 +52,13 @@ static void do_recvs(void)
     MPI_Recv(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
-    printf(">> The following functions should call MPI_Recv_l\n");
+    printf(">> The following functions should call MPI_Recv_x\n");
     MPI_Count bigI = 8589934592;
-    MPI_Recv_l(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+    MPI_Recv_x(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
                MPI_STATUS_IGNORE);
-    MPI_Recv_l(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+    MPI_Recv_x(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
                MPI_STATUS_IGNORE);
-    MPI_Recv_l(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+    MPI_Recv_x(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
                MPI_STATUS_IGNORE);
 }
 
@@ -76,13 +76,13 @@ static void do_allgathers(void)
     MPI_Allgather(buffer, smallI, MPI_CHAR,
                   buffer, smallI, MPI_CHAR, MPI_COMM_WORLD);
 
-    printf(">> The following functions should call MPI_Allgather_l\n");
+    printf(">> The following functions should call MPI_Allgather_x\n");
     MPI_Count bigI = 8589934592;
-    MPI_Allgather_l(buffer, bigI, MPI_CHAR,
+    MPI_Allgather_x(buffer, bigI, MPI_CHAR,
                     buffer, bigI, MPI_CHAR, MPI_COMM_WORLD);
-    MPI_Allgather_l(buffer, 8589934592, MPI_CHAR,
+    MPI_Allgather_x(buffer, 8589934592, MPI_CHAR,
                     buffer, 8589934592, MPI_CHAR, MPI_COMM_WORLD);
-    MPI_Allgather_l(buffer, (MPI_Count) 32, MPI_CHAR,
+    MPI_Allgather_x(buffer, (MPI_Count) 32, MPI_CHAR,
                     buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
 }
 
