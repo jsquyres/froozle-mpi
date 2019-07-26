@@ -7,140 +7,61 @@
 
 #include "froozle_config_fortran.h"
 
-subroutine do_sends()
+program example_mpifh
   use mpi
   implicit none
 
-  integer :: buffer
-  integer :: ierr, i = 32
-  integer(kind=MPI_COUNT_KIND) :: bigI = 8589934592_MPI_COUNT_KIND
+  integer BUFLEN
+  parameter(BUFLEN=32)
 
-  write(*,*) '>> The following functions should call MPI_Send (with int params)'
-  call MPI_Send(buffer, 32, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
-  call MPI_Send(buffer, i, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
-
-  write(*,*) '>> The following functions should call MPI_Send_l'
-  call MPI_Send(buffer, bigI, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
-  call MPI_Send(buffer, 858993459_MPI_COUNT_KIND, MPI_CHARACTER, &
-       0, 0, MPI_COMM_WORLD, ierr)
-end subroutine do_sends
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-subroutine do_recvs()
-  use mpi
-  implicit none
-
-  integer :: buffer
-  integer :: ierr, i = 32
-  integer(kind=MPI_COUNT_KIND) :: bigI = 8589934592_MPI_COUNT_KIND
-
-  write(*,*) '>> The following functions should call MPI_Recv (with int params)'
-  call MPI_Recv(buffer, 32, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
-       MPI_STATUS_IGNORE, ierr)
-  call MPI_Recv(buffer, i, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
-       MPI_STATUS_IGNORE, ierr)
-
-  write(*,*) '>> The following functions should call MPI_Recv_l'
-  call MPI_Recv(buffer, bigI, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
-       MPI_STATUS_IGNORE, ierr)
-  call MPI_Recv(buffer, 8589934592_MPI_COUNT_KIND, MPI_CHARACTER, &
-       0, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE, ierr)
-end subroutine do_recvs
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-subroutine do_allgathers()
-  use mpi
-  implicit none
-
-  integer :: buffer
-  integer :: ierr, i = 32
-  integer(kind=MPI_COUNT_KIND) :: bigI = 8589934592_MPI_COUNT_KIND
-
-  write(*,*) '>> The following functions should call MPI_Allgather (with int params)'
-  call MPI_Allgather(buffer, 32, MPI_CHARACTER, &
-       buffer, 32, MPI_CHARACTER, &
-       MPI_COMM_WORLD, ierr)
-  call MPI_Allgather(buffer, i, MPI_CHARACTER, &
-       buffer, i, MPI_CHARACTER, &
-       MPI_COMM_WORLD, ierr)
-  write(*,*) '>> The following functions should call MPI_Allgather_l'
-  call MPI_Allgather(buffer, bigI, MPI_CHARACTER, &
-       buffer, bigI, MPI_CHARACTER, &
-       MPI_COMM_WORLD, ierr)
-  call MPI_Allgather(buffer, bigI, MPI_CHARACTER, &
-       buffer, 8589934592_MPI_COUNT_KIND, MPI_CHARACTER, &
-       MPI_COMM_WORLD, ierr)
-end subroutine do_allgathers
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-subroutine check_eq_i(a, b)
-  implicit none
-
-  integer :: a, b
-
-  if (a .ne. b) then
-     write(*,*) 'ERROR (integer): ', a, '!=', 'b'
-     stop 1
-  endif
-end subroutine check_eq_i
-
-subroutine check_eq_c(a, b)
-  use mpi
-  implicit none
-
-  integer(kind=MPI_COUNT_KIND) :: a, b
-
-  if (a .ne. b) then
-     write(*,*) 'ERROR (MPI_COUNT_KIND): ', a, '!=', 'b'
-     stop 2
-  endif
-end subroutine check_eq_c
-
-subroutine do_get_elements()
-  use mpi
-
-  integer :: i, ierr
-  integer(KIND=MPI_COUNT_KIND) :: c
-
-  write(*,*) ">> The following functions call MPI_Get_elements"
-  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, i, ierr)
-  call check_eq_i(i, FROOZLE_TEST_SMALL_COUNT)
-  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, i, ierr)
-  call check_eq_i(i, MPI_UNDEFINED)
-
-  write(*,*) ">> The following functions call MPI_Get_elements_l"
-  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, c, ierr)
-  call check_eq_c(c, INT(FROOZLE_TEST_SMALL_COUNT, KIND=MPI_COUNT_KIND))
-  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, c, ierr)
-  call check_eq_c(c, FROOZLE_TEST_GIANT_COUNT_F)
-
-  write(*,*) ">> The following functions call MPI_Get_elements_x"
-  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHARACTER, c, ierr)
-  call check_eq_c(c, INT(FROOZLE_TEST_SMALL_COUNT, KIND=MPI_COUNT_KIND))
-  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INTEGER, c, ierr)
-  call check_eq_c(c, FROOZLE_TEST_GIANT_COUNT_F)
-end subroutine do_get_elements
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-program example_usempi
-  use mpi
-  implicit none
-
+  character, dimension(BUFLEN) :: buffer
   integer :: rank, size, ierr
+  integer :: small_count
+  integer(KIND=MPI_COUNT_KIND) :: big_count
 
   call MPI_Init(ierr)
 
   call MPI_Comm_rank(MPI_COMM_WORLD, rank, ierr)
   call MPI_Comm_size(MPI_COMM_WORLD, size, ierr)
 
-  call do_sends()
-  call do_recvs()
-  call do_allgathers()
-  call do_get_elements()
+  ! There are no count-sized arguments in mpif.h
+
+  call MPI_Send(buffer, 32, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
+  call MPI_Send(buffer, SIZE, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, ierr)
+
+  call MPI_Recv(buffer, 32, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
+       MPI_STATUS_IGNORE, ierr)
+  call MPI_Recv(buffer, SIZE, MPI_CHARACTER, 0, 0, MPI_COMM_WORLD, &
+       MPI_STATUS_IGNORE, ierr)
+
+  call MPI_Allgather(buffer, 32, MPI_CHARACTER, &
+       buffer, 32, MPI_CHARACTER, &
+       MPI_COMM_WORLD, ierr)
+  call MPI_Allgather(buffer, SIZE, MPI_CHARACTER, &
+       buffer, SIZE, MPI_CHARACTER, &
+       MPI_COMM_WORLD, ierr)
+
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHARACTER, small_count, ierr)
+  if (small_count .ne. FROOZLE_TEST_SMALL_COUNT) then
+     write(*,*) "ERROR: ", small_count, "!=", FROOZLE_TEST_SMALL_COUNT
+     stop 1
+  endif
+  call MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INTEGER, small_count, ierr)
+  if (small_count .ne. MPI_UNDEFINED) then
+     write(*,*) "ERROR: ", small_count, "!=", MPI_UNDEFINED
+     stop 1
+  endif
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHARACTER, big_count, ierr)
+  if (big_count .ne. FROOZLE_TEST_SMALL_COUNT) then
+     write(*,*) "ERROR: ", big_count, "!=", FROOZLE_TEST_SMALL_COUNT
+     stop 1
+  endif
+  call MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INTEGER, big_count, ierr)
+  if (big_count .ne. FROOZLE_TEST_GIANT_COUNT_F) then
+     write(*,*) "ERROR: ", big_count, "!=", FROOZLE_TEST_GIANT_COUNT_F
+     stop 1
+  endif
 
   call MPI_Finalize(ierr)
-end program example_usempi
+
+end program example_mpifh

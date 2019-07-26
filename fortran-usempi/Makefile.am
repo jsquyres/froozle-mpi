@@ -9,14 +9,10 @@ nodist_libmpi_usempi_la_SOURCES = \
 
 libmpi_usempi_la_SOURCES = \
         allgather_int_usempi.F90 \
-        allgather_count_usempi.F90 \
         get_elements_int_usempi.F90 \
-        get_elements_count_usempi.F90 \
         get_elements_x_usempi.F90 \
         recv_int_usempi.F90 \
-        recv_count_usempi.F90 \
-        send_int_usempi.F90 \
-        send_count_usempi.F90
+        send_int_usempi.F90
 
 #
 # Clean up generated and module files
