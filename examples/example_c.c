@@ -58,7 +58,7 @@ static void do_sends(void)
     // therefore the #define does not actually pre-processor replace the
     // "MPI_Send" below with the C11 _Generic expression.  Hence,
     // "MPI_Send" below returns a pointer to the int flavor of the MPI_Send
-    // function.
+    // function.  See C11 6.10.3, paragraph 10 for more explanation.
 
     // Now that we have function pointers, the normal C promotion
     // rules apply to the count parameter.
