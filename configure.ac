@@ -119,7 +119,6 @@ AC_OUTPUT([
     fortran-usempi/mpi-module.F90
     fortran-usempif08/Makefile
     fortran-usempif08/mpi-f08-module.F90
-    cxx/Makefile
 
     examples/Makefile
 ])

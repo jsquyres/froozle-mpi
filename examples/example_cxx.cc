@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <mpi.hpp>
+#include <mpi.h>
 
 #define SIZE 32
 char buffer[SIZE];
@@ -33,14 +33,11 @@ static void do_sends(void)
     short smallI = 16;
     MPI_Send(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 
-    printf(">> The following functions should call MPI_Send (with count params)\n");
+    printf(">> The following functions should call MPI_Send_l\n");
     MPI_Count bigI = 8589934592;
-    MPI_Send(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
-
-    // This one will generate a compiler warning (or error!) if you
-    // have no C11 _Generic support.
-    MPI_Send(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
-    MPI_Send(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_l(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_l(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
+    MPI_Send_l(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD);
 }
 
 static void do_recvs(void)
@@ -55,17 +52,14 @@ static void do_recvs(void)
     MPI_Recv(buffer, smallI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
              MPI_STATUS_IGNORE);
 
-    printf(">> The following functions should call MPI_Recv (with count params)\n");
+    printf(">> The following functions should call MPI_Recv_l\n");
     MPI_Count bigI = 8589934592;
-    MPI_Recv(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
-             MPI_STATUS_IGNORE);
-
-    // This one will generate a compiler warning (or error!) if you
-    // have no C11 _Generic support.
-    MPI_Recv(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
-             MPI_STATUS_IGNORE);
-    MPI_Recv(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
-             MPI_STATUS_IGNORE);
+    MPI_Recv_l(buffer, bigI, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+    MPI_Recv_l(buffer, 8589934592, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
+    MPI_Recv_l(buffer, (MPI_Count) 32, MPI_CHAR, 0, 0, MPI_COMM_WORLD,
+               MPI_STATUS_IGNORE);
 }
 
 static void do_allgathers(void)
@@ -82,14 +76,14 @@ static void do_allgathers(void)
     MPI_Allgather(buffer, smallI, MPI_CHAR,
                   buffer, smallI, MPI_CHAR, MPI_COMM_WORLD);
 
-    printf(">> The following functions should call MPI_Allgather (with count params)\n");
+    printf(">> The following functions should call MPI_Allgather_l\n");
     MPI_Count bigI = 8589934592;
-    MPI_Allgather(buffer, bigI, MPI_CHAR,
-                  buffer, bigI, MPI_CHAR, MPI_COMM_WORLD);
-    MPI_Allgather(buffer, 8589934592, MPI_CHAR,
-                  buffer, 8589934592, MPI_CHAR, MPI_COMM_WORLD);
-    MPI_Allgather(buffer, (MPI_Count) 32, MPI_CHAR,
-                  buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_l(buffer, bigI, MPI_CHAR,
+                    buffer, bigI, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_l(buffer, 8589934592, MPI_CHAR,
+                    buffer, 8589934592, MPI_CHAR, MPI_COMM_WORLD);
+    MPI_Allgather_l(buffer, (MPI_Count) 32, MPI_CHAR,
+                    buffer, (MPI_Count) 32, MPI_CHAR, MPI_COMM_WORLD);
 }
 
 static void check_eq(MPI_Count a, MPI_Count b, int line)
@@ -112,14 +106,8 @@ static void do_get_elements(void)
     MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_i);
     CHECK_EQ(count_i, MPI_UNDEFINED);
 
-    printf(">> The following functions call MPI_Get_elements (with count params)\n");
-    MPI_Count count_c;
-    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
-    CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
-    MPI_Get_elements(MPI_STATUS_IGNORE, MPI_INT, &count_c);
-    CHECK_EQ(count_c, FROOZLE_TEST_GIANT_COUNT_C);
-
     printf(">> The following functions call MPI_Get_elements_x\n");
+    MPI_Count count_c;
     MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_CHAR, &count_c);
     CHECK_EQ(count_c, (MPI_Count) FROOZLE_TEST_SMALL_COUNT);
     MPI_Get_elements_x(MPI_STATUS_IGNORE, MPI_INT, &count_c);

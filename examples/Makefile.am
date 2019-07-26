@@ -2,10 +2,6 @@
 
 AM_CPPFLAGS = -I$(TOP_SRCDIR)/c
 
-# For <mpi.hpp> (which is not generated, and therefore Automake did
-# not automatically -I that directory)
-AM_CXXFLAGS = -I$(TOP_SRCDIR)/cxx
-
 mpif   = -I$(TOP_SRCDIR)/include
 usempi = -I$(TOP_BUILDDIR)/fortran-usempi
 usef08 = -I$(TOP_BUILDDIR)/fortran-usempif08
@@ -20,9 +16,7 @@ bin_PROGRAMS = \
 example_c_LDADD = $(TOP_BUILDDIR)/c/libmpi.la
 
 example_cxx_SOURCES = example_cxx.cc
-example_cxx_LDADD   = \
-        $(TOP_BUILDDIR)/cxx/libmpi_cxx.la \
-        $(TOP_BUILDDIR)/c/libmpi.la
+example_cxx_LDADD   = $(TOP_BUILDDIR)/c/libmpi.la
 
 example_mpifh_SOURCES = example_mpifh.F90
 example_mpifh_FCFLAGS = $(mpif)
