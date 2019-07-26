@@ -2,7 +2,6 @@
 
 include_HEADERS = \
         mpi.h \
-        mpi-config.h \
         mpif.h \
         mpif-constants.h \
         mpif-handles.h \
